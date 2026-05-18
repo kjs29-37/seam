@@ -453,13 +453,24 @@ create policy "applications_admin_update" on public.tailor_applications for upda
 -- Run after creating your first admin user and setting their role
 -- ============================================================
 
--- NOTE: Replace the UUIDs below with real user UUIDs from auth.users
--- Or create tailor accounts via signup, then insert the tailor rows
+-- Seed user: a synthetic auth user that owns all demo tailor rows.
+-- We insert directly into auth.users so the seed is fully self-contained.
+insert into auth.users (id, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data, aud, role)
+values (
+  '00000000-0000-0000-0000-000000000000',
+  'seed@seam.internal',
+  '',
+  now(), now(), now(),
+  '{"provider":"email","providers":["email"]}',
+  '{"full_name":"Seed Account","role":"tailor"}',
+  'authenticated',
+  'authenticated'
+) on conflict (id) do nothing;
 
 insert into public.tailors (id, user_id, studio_name, location, country, region, bio, verified, featured, price_min, price_max, currency, delivery_weeks, response_time, rating, review_count) values
-  ('00000000-0000-0000-0000-000000000001', auth.uid(), 'Lagos Bespoke Studio', 'Lagos, Nigeria', 'Nigeria', 'West Africa', 'Three generations of tailoring excellence from Lagos Island. We specialise in bespoke suits and formal African wear, blending traditional craftsmanship with contemporary silhouettes.', true, true, 180, 1200, 'GBP', 6, 'within 24 hours', 4.9, 48),
-  ('00000000-0000-0000-0000-000000000002', auth.uid(), 'Nairobi Tailors Co.', 'Nairobi, Kenya', 'Kenya', 'East Africa', 'East Africa''s premier bespoke studio. Known for immaculate construction and stunning bridal work.', true, true, 220, 1800, 'GBP', 8, 'within 12 hours', 4.8, 34),
-  ('00000000-0000-0000-0000-000000000003', auth.uid(), 'Accra Threads', 'Accra, Ghana', 'Ghana', 'West Africa', 'Specialists in Kente and Ankara bespoke. We source hand-woven kente directly from Bonwire weavers.', true, false, 120, 800, 'GBP', 5, 'within 24 hours', 4.7, 29),
-  ('00000000-0000-0000-0000-000000000004', auth.uid(), 'Dakar Couture House', 'Dakar, Senegal', 'Senegal', 'West Africa', 'Haute couture from the heart of Dakar. Evening gowns and grand boubou in bazin riche are our signature.', true, false, 200, 1400, 'GBP', 7, 'within 48 hours', 4.6, 21),
-  ('00000000-0000-0000-0000-000000000005', auth.uid(), 'Cairo Bespoke', 'Cairo, Egypt', 'Egypt', 'North Africa', 'Cairo''s finest menswear studio. Shirts, suits, and tailored trousers crafted from Egyptian cotton and finest imports.', true, false, 80, 600, 'GBP', 4, 'within 24 hours', 4.5, 17),
-  ('00000000-0000-0000-0000-000000000006', auth.uid(), 'Kampala Stitch Co.', 'Kampala, Uganda', 'Uganda', 'East Africa', 'Quality everyday wear and smart-casual tailoring from Kampala. Fast turnaround, honest prices.', false, false, 60, 400, 'GBP', 3, 'within 24 hours', 4.3, 12);
+  ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'Lagos Bespoke Studio', 'Lagos, Nigeria', 'Nigeria', 'West Africa', 'Three generations of tailoring excellence from Lagos Island. We specialise in bespoke suits and formal African wear, blending traditional craftsmanship with contemporary silhouettes.', true, true, 180, 1200, 'GBP', 6, 'within 24 hours', 4.9, 48),
+  ('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'Nairobi Tailors Co.', 'Nairobi, Kenya', 'Kenya', 'East Africa', 'East Africa''s premier bespoke studio. Known for immaculate construction and stunning bridal work.', true, true, 220, 1800, 'GBP', 8, 'within 12 hours', 4.8, 34),
+  ('00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000000', 'Accra Threads', 'Accra, Ghana', 'Ghana', 'West Africa', 'Specialists in Kente and Ankara bespoke. We source hand-woven kente directly from Bonwire weavers.', true, false, 120, 800, 'GBP', 5, 'within 24 hours', 4.7, 29),
+  ('00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000000', 'Dakar Couture House', 'Dakar, Senegal', 'Senegal', 'West Africa', 'Haute couture from the heart of Dakar. Evening gowns and grand boubou in bazin riche are our signature.', true, false, 200, 1400, 'GBP', 7, 'within 48 hours', 4.6, 21),
+  ('00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000000', 'Cairo Bespoke', 'Cairo, Egypt', 'Egypt', 'North Africa', 'Cairo''s finest menswear studio. Shirts, suits, and tailored trousers crafted from Egyptian cotton and finest imports.', true, false, 80, 600, 'GBP', 4, 'within 24 hours', 4.5, 17),
+  ('00000000-0000-0000-0000-000000000006', '00000000-0000-0000-0000-000000000000', 'Kampala Stitch Co.', 'Kampala, Uganda', 'Uganda', 'East Africa', 'Quality everyday wear and smart-casual tailoring from Kampala. Fast turnaround, honest prices.', false, false, 60, 400, 'GBP', 3, 'within 24 hours', 4.3, 12);
