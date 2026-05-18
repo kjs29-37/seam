@@ -6,9 +6,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
 const navLinks = [
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "For Tailors", href: "#for-tailors" },
   { label: "Browse Tailors", href: "/tailors" },
+  { label: "Community", href: "/community" },
+  { label: "Apply as Tailor", href: "/apply" },
 ];
 
 export default function Navbar() {
@@ -51,10 +51,10 @@ export default function Navbar() {
         {/* Right actions */}
         <div className="hidden md:flex items-center justify-end gap-1">
           <Link
-            href="/tailors"
-            className="text-[0.75rem] font-medium tracking-[0.08em] uppercase text-[#6b6757] px-5 h-[72px] flex items-center border-b-2 border-transparent hover:text-[#1c1b17] transition-colors"
+            href="/apply"
+            className="text-[0.75rem] font-medium tracking-[0.08em] uppercase text-[#6b6757] px-4 h-[72px] flex items-center border-b-2 border-transparent hover:text-[#1c1b17] transition-colors"
           >
-            Browse Tailors
+            Apply as Tailor
           </Link>
           <Link
             href="/auth/login"
@@ -91,12 +91,14 @@ export default function Navbar() {
                 <div className="pt-6 flex flex-col gap-3">
                   <Link
                     href="/auth/login"
+                    onClick={() => setOpen(false)}
                     className="border border-[#d0ccbf] rounded-[6px] px-4 py-3 text-center text-sm font-medium text-[#1c1b17] hover:bg-[#f7f5f0] transition"
                   >
                     Sign In
                   </Link>
                   <Link
                     href="/auth/signup"
+                    onClick={() => setOpen(false)}
                     className="bg-[#0f0e0b] text-white rounded-[6px] px-4 py-3 text-center text-sm font-semibold tracking-[0.04em] hover:opacity-80 transition"
                   >
                     Get Started

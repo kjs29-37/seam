@@ -6,8 +6,9 @@ import Link from "next/link";
 const navItems = [
   { label: "Overview", href: "/tailor/dashboard", icon: "🏠" },
   { label: "Enquiries", href: "/tailor/dashboard/enquiries", icon: "✉️" },
+  { label: "Messages", href: "/messages", icon: "💬" },
   { label: "Active Orders", href: "/tailor/dashboard/orders", icon: "📦" },
-  { label: "Quotes Sent", href: "/tailor/dashboard/quotes", icon: "💬" },
+  { label: "Quotes Sent", href: "/tailor/dashboard/quotes", icon: "📋" },
   { label: "Earnings", href: "/tailor/dashboard/earnings", icon: "💷" },
   { label: "Portfolio", href: "/tailor/dashboard/portfolio", icon: "🖼️" },
   { label: "Reviews", href: "/tailor/dashboard/reviews", icon: "⭐" },
