@@ -56,7 +56,7 @@ const activeOrders = [
     id: "ORD-003",
     customer: "Fatima M.",
     garment: "Ankara Blouse",
-    status: "delivered",
+    status: "issue_window",
     payout: "£124",
     payoutStatus: "eligible",
     dueIn: "Issue window: 4 days left",
@@ -68,17 +68,18 @@ export default function TailorDashboard() {
     <DashboardLayout role="tailor" navItems={navItems}>
       <div className="space-y-8">
         {/* Header */}
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold text-white">Lagos Bespoke Studio</h1>
-            <div className="mt-1 flex items-center gap-2">
-              <span className="text-sm text-slate-400">Verified Tailor</span>
-              <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 text-xs text-emerald-300">✓ Active</span>
+            <p className="text-[0.62rem] font-bold tracking-[0.15em] uppercase text-[#8b6914]">Tailor Studio</p>
+            <h1 className="font-display text-[1.8rem] font-bold text-[#0f0e0b] leading-tight">Lagos Bespoke Studio</h1>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-[0.78rem] text-[#6b6757]">Verified Tailor</span>
+              <span className="text-[0.6rem] font-bold tracking-[0.06em] uppercase text-[#1a5c38] bg-[#e8f2ec] border border-[#c0d9c8] px-2 py-0.5 rounded-full">✓ Active</span>
             </div>
           </div>
           <Link
             href="/tailor/dashboard/profile"
-            className="rounded-2xl border border-white/15 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-white/10"
+            className="shrink-0 border border-[#d0ccbf] text-[#1c1b17] text-[0.72rem] font-semibold tracking-[0.06em] uppercase px-5 py-2.5 rounded-[6px] hover:bg-[#f7f5f0] transition"
           >
             Edit Profile
           </Link>
@@ -94,30 +95,31 @@ export default function TailorDashboard() {
 
         {/* New Enquiries */}
         <section>
-          <h2 className="mb-4 text-lg font-semibold text-white">New Enquiries</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[0.65rem] font-bold tracking-[0.12em] uppercase text-[#6b6757]">New Enquiries</h2>
+            <Link href="/tailor/dashboard/enquiries" className="text-[0.72rem] text-[#8b6914] hover:underline">View all</Link>
+          </div>
           <div className="space-y-3">
             {newEnquiries.map((e) => (
-              <div
-                key={e.id}
-                className="rounded-2xl border border-white/10 bg-white/5 p-5"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-3">
+              <div key={e.id} className="bg-white border border-[#e6e3da] rounded-[6px] p-5">
+                <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                   <div>
-                    <p className="font-medium text-white">{e.garment}</p>
-                    <p className="mt-0.5 text-sm text-slate-400">From {e.customer} · {e.date}</p>
+                    <p className="font-display text-[1rem] font-bold text-[#0f0e0b]">{e.garment}</p>
+                    <p className="text-[0.78rem] text-[#6b6757] mt-0.5">From {e.customer} · {e.date} · {e.id}</p>
                   </div>
-                  <span className="rounded-full bg-amber-400/15 px-3 py-1 text-xs text-amber-300">New</span>
+                  <span className="text-[0.6rem] font-bold tracking-[0.06em] uppercase text-[#8b6914] bg-[#faf4e1] border border-[#c49a2a]/30 px-2.5 py-0.5 rounded-full shrink-0">
+                    New
+                  </span>
                 </div>
-                <div className="mt-4 flex flex-wrap gap-6 text-sm text-slate-400">
-                  <span>Budget <span className="text-slate-300">{e.budget}</span></span>
-                  <span>Deadline <span className="text-slate-300">{e.deadline}</span></span>
-                  <span>Ref <span className="text-slate-300">{e.id}</span></span>
+                <div className="flex flex-wrap gap-6 text-[0.82rem] text-[#6b6757] mb-4">
+                  <span>Budget <span className="font-semibold text-[#1c1b17]">{e.budget}</span></span>
+                  <span>Deadline <span className="font-semibold text-[#1c1b17]">{e.deadline}</span></span>
                 </div>
-                <div className="mt-4 flex gap-2">
-                  <button className="flex-1 rounded-xl bg-emerald-500 py-2 text-sm font-medium text-slate-950 transition hover:bg-emerald-400">
+                <div className="flex gap-2">
+                  <button className="flex-1 bg-[#0f0e0b] text-white text-[0.72rem] font-semibold tracking-[0.06em] uppercase py-2.5 rounded-[6px] hover:opacity-80 transition-opacity">
                     View Brief &amp; Quote
                   </button>
-                  <button className="rounded-xl border border-white/10 px-4 py-2 text-sm text-slate-400 transition hover:bg-white/5">
+                  <button className="border border-[#d0ccbf] text-[#6b6757] text-[0.72rem] font-semibold tracking-[0.06em] uppercase px-4 py-2.5 rounded-[6px] hover:bg-[#f7f5f0] transition">
                     Decline
                   </button>
                 </div>
@@ -128,52 +130,61 @@ export default function TailorDashboard() {
 
         {/* Active Orders */}
         <section>
-          <h2 className="mb-4 text-lg font-semibold text-white">Active Orders</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[0.65rem] font-bold tracking-[0.12em] uppercase text-[#6b6757]">Active Orders</h2>
+            <Link href="/tailor/dashboard/orders" className="text-[0.72rem] text-[#8b6914] hover:underline">View all</Link>
+          </div>
           <div className="space-y-3">
             {activeOrders.map((order) => (
-              <div
-                key={order.id}
-                className="rounded-2xl border border-white/10 bg-white/5 p-5"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-3">
+              <div key={order.id} className="bg-white border border-[#e6e3da] rounded-[6px] p-5">
+                <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                   <div>
-                    <p className="font-medium text-white">{order.garment}</p>
-                    <p className="mt-0.5 text-sm text-slate-400">For {order.customer} · {order.id}</p>
+                    <p className="font-display text-[1rem] font-bold text-[#0f0e0b]">{order.garment}</p>
+                    <p className="text-[0.78rem] text-[#6b6757] mt-0.5">For {order.customer} · {order.id}</p>
                   </div>
                   <StatusBadge status={order.status} />
                 </div>
-                <div className="mt-4 flex flex-wrap gap-6 text-sm text-slate-400">
-                  <span>Payout <span className="text-white font-medium">{order.payout}</span></span>
-                  <span>Status <span className="text-slate-300 capitalize">{order.payoutStatus}</span></span>
-                  <span className="text-slate-300">{order.dueIn}</span>
+                <div className="flex flex-wrap gap-6 text-[0.82rem] text-[#6b6757] mb-3">
+                  <span>Payout <span className="font-semibold text-[#0f0e0b]">{order.payout}</span></span>
+                  <span className="text-[#6b6757]">{order.dueIn}</span>
                 </div>
                 {order.payoutStatus === "eligible" && (
-                  <div className="mt-3 rounded-xl border border-emerald-400/20 bg-emerald-400/5 p-3 text-sm text-emerald-300">
-                    This order is eligible for payout release — awaiting SEAM admin confirmation.
+                  <div className="bg-[#e8f2ec] border border-[#c0d9c8] rounded-[4px] p-3 text-[0.78rem] text-[#1a5c38]">
+                    ✓ Eligible for payout release — awaiting SEAM admin confirmation.
                   </div>
                 )}
+                <Link
+                  href={`/orders/${order.id}`}
+                  className="mt-3 inline-flex items-center gap-1 text-[0.75rem] font-semibold text-[#8b6914] hover:underline"
+                >
+                  View order →
+                </Link>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Escrow reminder */}
-        <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-          <h3 className="font-semibold text-white">How payouts work</h3>
-          <div className="mt-4 space-y-2">
+        {/* How payouts work */}
+        <div className="bg-white border border-[#e6e3da] rounded-[6px] p-6">
+          <h3 className="text-[0.65rem] font-bold tracking-[0.12em] uppercase text-[#6b6757] mb-4 pb-3 border-b border-[#e6e3da]">
+            How Payouts Work
+          </h3>
+          <div className="space-y-2">
             {[
               "Customer pays → funds held securely in escrow by SEAM",
               "You produce and ship the garment",
               "Customer has a 7-day issue window after delivery",
               "No issues raised → SEAM releases payment to you",
-            ].map((step) => (
-              <div key={step} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-slate-300">
-                <span className="mt-0.5 text-emerald-400">✓</span>
+            ].map((step, i) => (
+              <div key={step} className="flex items-start gap-3 text-[0.82rem] text-[#6b6757]">
+                <span className="h-5 w-5 shrink-0 rounded-full border border-[#8b6914] text-[#8b6914] flex items-center justify-center text-[0.6rem] font-bold mt-0.5">
+                  {i + 1}
+                </span>
                 {step}
               </div>
             ))}
           </div>
-        </section>
+        </div>
       </div>
     </DashboardLayout>
   );
