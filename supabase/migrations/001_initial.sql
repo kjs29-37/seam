@@ -263,59 +263,96 @@ alter table public.dispute_events         enable row level security;
 alter table public.tailor_applications    enable row level security;
 
 -- Profiles: own row + admin sees all
-create policy "profiles_self" on public.profiles for all using (auth.uid() = id);
+create policy "profiles_self_select" on public.profiles for select using (auth.uid() = id);
+create policy "profiles_self_insert" on public.profiles for insert with check (auth.uid() = id);
+create policy "profiles_self_update" on public.profiles for update using (auth.uid() = id) with check (auth.uid() = id);
 create policy "profiles_admin" on public.profiles for select using (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
 -- Tailors: public read, tailor edits own, admin edits all
 create policy "tailors_public_read" on public.tailors for select using (true);
-create policy "tailors_owner_write" on public.tailors for all using (user_id = auth.uid());
-create policy "tailors_admin_write" on public.tailors for all using (
+create policy "tailors_owner_insert" on public.tailors for insert with check (user_id = auth.uid());
+create policy "tailors_owner_update" on public.tailors for update using (user_id = auth.uid()) with check (user_id = auth.uid());
+create policy "tailors_owner_delete" on public.tailors for delete using (user_id = auth.uid());
+create policy "tailors_admin" on public.tailors for all using (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+) with check (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
 -- Specialism/category/portfolio: public read, owner write
 create policy "tailor_specialisms_read" on public.tailor_specialisms for select using (true);
-create policy "tailor_specialisms_write" on public.tailor_specialisms for all using (
+create policy "tailor_specialisms_insert" on public.tailor_specialisms for insert with check (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+);
+create policy "tailor_specialisms_delete" on public.tailor_specialisms for delete using (
   exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
 );
 create policy "tailor_categories_read" on public.tailor_garment_categories for select using (true);
-create policy "tailor_categories_write" on public.tailor_garment_categories for all using (
+create policy "tailor_categories_insert" on public.tailor_garment_categories for insert with check (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+);
+create policy "tailor_categories_delete" on public.tailor_garment_categories for delete using (
   exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
 );
 create policy "portfolio_read" on public.portfolio_items for select using (true);
-create policy "portfolio_write" on public.portfolio_items for all using (
+create policy "portfolio_insert" on public.portfolio_items for insert with check (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+);
+create policy "portfolio_update" on public.portfolio_items for update using (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+) with check (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+);
+create policy "portfolio_delete" on public.portfolio_items for delete using (
   exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
 );
 
 -- Enquiries: customer sees own, tailor sees theirs, admin sees all
-create policy "enquiries_customer" on public.enquiries for all using (customer_id = auth.uid());
-create policy "enquiries_tailor" on public.enquiries for select using (
+create policy "enquiries_customer_select" on public.enquiries for select using (customer_id = auth.uid());
+create policy "enquiries_customer_insert" on public.enquiries for insert with check (customer_id = auth.uid());
+create policy "enquiries_tailor_select" on public.enquiries for select using (
   exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
 );
 create policy "enquiries_admin" on public.enquiries for all using (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+) with check (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
 -- Quotes: customer sees theirs, tailor sees theirs, admin sees all
-create policy "quotes_customer" on public.quotes for select using (customer_id = auth.uid());
-create policy "quotes_tailor" on public.quotes for all using (
+create policy "quotes_customer_select" on public.quotes for select using (customer_id = auth.uid());
+create policy "quotes_tailor_select" on public.quotes for select using (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+);
+create policy "quotes_tailor_insert" on public.quotes for insert with check (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+);
+create policy "quotes_tailor_update" on public.quotes for update using (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+) with check (
   exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
 );
 create policy "quotes_admin" on public.quotes for all using (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+) with check (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
 -- Orders: customer sees own, tailor sees theirs, admin sees all
-create policy "orders_customer" on public.orders for select using (customer_id = auth.uid());
-create policy "orders_tailor" on public.orders for select using (
+create policy "orders_customer_select" on public.orders for select using (customer_id = auth.uid());
+create policy "orders_tailor_select" on public.orders for select using (
   exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
 );
 create policy "orders_tailor_update" on public.orders for update using (
   exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+) with check (
+  exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
 );
 create policy "orders_admin" on public.orders for all using (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+) with check (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
@@ -328,14 +365,27 @@ create policy "milestones_parties" on public.order_milestones for select using (
 );
 create policy "milestones_admin" on public.order_milestones for all using (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+) with check (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
 -- Messages: only conversation parties
-create policy "conversations_parties" on public.conversations for all using (
+create policy "conversations_select" on public.conversations for select using (
   customer_id = auth.uid()
   or exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
 );
-create policy "messages_parties" on public.messages for all using (
+create policy "conversations_insert" on public.conversations for insert with check (
+  customer_id = auth.uid()
+  or exists (select 1 from public.tailors where id = tailor_id and user_id = auth.uid())
+);
+create policy "messages_select" on public.messages for select using (
+  exists (
+    select 1 from public.conversations c
+    where c.id = conversation_id
+    and (c.customer_id = auth.uid() or exists (select 1 from public.tailors where id = c.tailor_id and user_id = auth.uid()))
+  )
+);
+create policy "messages_insert" on public.messages for insert with check (
   exists (
     select 1 from public.conversations c
     where c.id = conversation_id
@@ -345,17 +395,23 @@ create policy "messages_parties" on public.messages for all using (
 
 -- Reviews: public read, customer writes own
 create policy "reviews_public_read" on public.reviews for select using (true);
-create policy "reviews_customer_write" on public.reviews for insert using (customer_id = auth.uid());
+create policy "reviews_customer_insert" on public.reviews for insert with check (customer_id = auth.uid());
 
 -- Disputes: parties + admin
-create policy "disputes_customer" on public.disputes for all using (raised_by = auth.uid());
-create policy "disputes_tailor" on public.disputes for select using (
+create policy "disputes_customer_select" on public.disputes for select using (raised_by = auth.uid());
+create policy "disputes_customer_insert" on public.disputes for insert with check (raised_by = auth.uid());
+create policy "disputes_tailor_select" on public.disputes for select using (
   exists (
     select 1 from public.orders o join public.tailors t on t.id = o.tailor_id
     where o.id = order_id and t.user_id = auth.uid()
   )
 );
-create policy "disputes_tailor_respond" on public.disputes for update using (
+create policy "disputes_tailor_update" on public.disputes for update using (
+  exists (
+    select 1 from public.orders o join public.tailors t on t.id = o.tailor_id
+    where o.id = order_id and t.user_id = auth.uid()
+  )
+) with check (
   exists (
     select 1 from public.orders o join public.tailors t on t.id = o.tailor_id
     where o.id = order_id and t.user_id = auth.uid()
@@ -363,9 +419,11 @@ create policy "disputes_tailor_respond" on public.disputes for update using (
 );
 create policy "disputes_admin" on public.disputes for all using (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+) with check (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
-create policy "dispute_events_parties" on public.dispute_events for select using (
+create policy "dispute_events_select" on public.dispute_events for select using (
   exists (
     select 1 from public.disputes d
     join public.orders o on o.id = d.order_id
@@ -374,17 +432,19 @@ create policy "dispute_events_parties" on public.dispute_events for select using
          or exists (select 1 from public.tailors where id = o.tailor_id and user_id = auth.uid()))
   )
 );
-create policy "dispute_events_insert" on public.dispute_events for insert using (
+create policy "dispute_events_insert" on public.dispute_events for insert with check (
   actor_id = auth.uid()
   or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
--- Applications: only admin reads; anyone inserts
-create policy "applications_insert" on public.tailor_applications for insert using (true);
-create policy "applications_admin" on public.tailor_applications for select using (
+-- Applications: anyone inserts; only admin reads/updates
+create policy "applications_insert" on public.tailor_applications for insert with check (true);
+create policy "applications_admin_select" on public.tailor_applications for select using (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 create policy "applications_admin_update" on public.tailor_applications for update using (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+) with check (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
 );
 
