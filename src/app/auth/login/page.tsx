@@ -3,19 +3,20 @@
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 const inputClass = "w-full px-4 py-3 border border-[#d0ccbf] rounded-[6px] text-[0.9rem] bg-[#fdfcf9] text-[#1c1b17] placeholder:text-[#9c9886] focus:outline-none focus:border-[#8b6914] focus:ring-2 focus:ring-[#8b6914]/10 transition";
 
-const demoAccounts = [
-  { role: "customer", label: "Customer", email: "jane@demo.com", dest: "/customer/dashboard" },
-  { role: "tailor", label: "Tailor Studio", email: "lagos@demo.com", dest: "/tailor/dashboard" },
-  { role: "admin", label: "Admin", email: "admin@seam.co", dest: "/admin/dashboard" },
-];
+const roleDestinations: Record<string, string> = {
+  customer: "/customer/dashboard",
+  tailor: "/tailor/dashboard",
+  admin: "/admin/dashboard",
+};
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") ?? null;
+  const redirectTo = searchParams.get("redirect");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,20 +27,31 @@ function LoginForm() {
     e.preventDefault();
     setError("");
     if (!email || !password) { setError("Please enter your email and password."); return; }
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 900));
 
-    const match = demoAccounts.find((a) => a.email === email.trim().toLowerCase());
-    if (!match) {
-      setError("No account found. Try a demo account below.");
+    setLoading(true);
+    const supabase = createClient();
+
+    const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (authError) {
+      setError(authError.message);
       setLoading(false);
       return;
     }
-    router.push(redirectTo ?? match.dest);
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", data.user.id)
+      .single<{ role: string }>();
+
+    const role = profile?.role ?? "customer";
+    router.push(redirectTo ?? roleDestinations[role] ?? "/customer/dashboard");
+    router.refresh();
   }
 
-  function loginAs(account: typeof demoAccounts[number]) {
-    router.push(redirectTo ?? account.dest);
+  async function loginAsDemo(role: "customer" | "tailor" | "admin") {
+    router.push(redirectTo ?? roleDestinations[role]);
   }
 
   return (
@@ -92,18 +104,18 @@ function LoginForm() {
             </button>
           </form>
 
-          {/* Demo accounts */}
+          {/* Demo bypass */}
           <div className="mt-6 pt-6 border-t border-[#e6e3da]">
-            <p className="text-[0.65rem] font-bold tracking-[0.1em] uppercase text-[#9c9886] mb-3">Demo — sign in as</p>
+            <p className="text-[0.65rem] font-bold tracking-[0.1em] uppercase text-[#9c9886] mb-3">Demo — explore as</p>
             <div className="grid grid-cols-3 gap-2">
-              {demoAccounts.map((a) => (
+              {(["customer", "tailor", "admin"] as const).map((role) => (
                 <button
-                  key={a.role}
+                  key={role}
                   type="button"
-                  onClick={() => loginAs(a)}
-                  className="border border-[#d0ccbf] text-[#6b6757] text-[0.68rem] font-semibold tracking-[0.06em] uppercase py-2.5 rounded-[6px] hover:bg-[#f7f5f0] hover:border-[#8b6914] hover:text-[#8b6914] transition"
+                  onClick={() => loginAsDemo(role)}
+                  className="border border-[#d0ccbf] text-[#6b6757] text-[0.68rem] font-semibold tracking-[0.06em] uppercase py-2.5 rounded-[6px] hover:bg-[#f7f5f0] hover:border-[#8b6914] hover:text-[#8b6914] transition capitalize"
                 >
-                  {a.label}
+                  {role === "tailor" ? "Tailor" : role.charAt(0).toUpperCase() + role.slice(1)}
                 </button>
               ))}
             </div>
