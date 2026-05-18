@@ -2,34 +2,43 @@ import Link from "next/link";
 
 export default function CTA() {
   return (
-    <section className="border-t border-white/10 bg-slate-900/70">
-      <div className="mx-auto max-w-5xl px-6 py-20 text-center lg:px-8">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-300">
-          Get Started
-        </p>
-        <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
-          Your perfect garment is one enquiry away.
+    <section className="bg-[#fdfcf9]">
+      <div className="mx-auto max-w-[1280px] px-8 py-24 text-center">
+        <div className="inline-flex items-center gap-3 mb-6">
+          <span className="block w-8 h-px bg-[#c49a2a]" />
+          <span className="text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-[#8b6914]">
+            Get Started
+          </span>
+          <span className="block w-8 h-px bg-[#c49a2a]" />
+        </div>
+
+        <h2 className="font-display font-black tracking-[-0.02em] text-[#0f0e0b] mb-6"
+          style={{ fontSize: "clamp(2rem, 4vw, 3.4rem)" }}>
+          Your perfect garment is{" "}
+          <em className="italic font-normal text-[#8b6914]">one enquiry away.</em>
         </h2>
-        <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-          Join SEAM today and discover what&apos;s possible when the world&apos;s best
-          tailors are just a message away — with your payment protected every step.
+
+        <p className="max-w-lg mx-auto text-[#6b6757] text-[0.95rem] leading-[1.75] mb-10">
+          Join SEAM today and discover what&apos;s possible when the world&apos;s best tailors
+          are just a message away — with your payment protected every step.
         </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/auth/signup?role=customer"
-            className="rounded-2xl bg-emerald-500 px-6 py-3 font-medium text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400"
+            className="bg-[#0f0e0b] text-white text-[0.78rem] font-semibold tracking-[0.06em] uppercase px-8 py-3.5 rounded-[6px] hover:opacity-80 transition-opacity"
           >
             Join as Customer
           </Link>
           <Link
             href="/auth/signup?role=tailor"
-            className="rounded-2xl border border-white/15 bg-white/5 px-6 py-3 font-medium text-white transition hover:bg-white/10"
+            className="border border-[#d0ccbf] text-[#1c1b17] text-[0.78rem] font-semibold tracking-[0.06em] uppercase px-8 py-3.5 rounded-[6px] hover:bg-[#f7f5f0] transition"
           >
             Apply as Tailor
           </Link>
           <Link
             href="/auth/signup"
-            className="rounded-2xl border border-white/10 px-6 py-3 font-medium text-slate-400 transition hover:text-white"
+            className="text-[#6b6757] text-[0.78rem] font-semibold tracking-[0.06em] uppercase px-8 py-3.5 hover:text-[#1c1b17] transition"
           >
             Request Early Access
           </Link>

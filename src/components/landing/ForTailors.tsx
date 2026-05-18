@@ -11,84 +11,78 @@ const benefits = [
 
 export default function ForTailors() {
   return (
-    <section id="for-tailors" className="border-y border-white/10 bg-slate-900/60">
-      <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+    <section id="for-tailors" className="border-b border-[#e6e3da] bg-white">
+      <div className="mx-auto max-w-[1280px] px-8 py-20">
+        <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-300">
+            <p className="text-[0.65rem] font-bold tracking-[0.16em] uppercase text-[#8b6914] mb-3">
               For Tailors
             </p>
-            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
-              Grow your craft beyond your city.
+            <h2 className="font-display text-[2rem] font-bold tracking-[-0.02em] text-[#0f0e0b] mb-5">
+              Grow your craft<br />beyond your city.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-slate-300">
+            <p className="text-[#6b6757] text-[0.95rem] leading-[1.75] mb-8">
               SEAM gives talented tailors a global storefront. Create your profile,
               showcase your portfolio, and receive enquiries from customers worldwide —
-              all managed through a simple, professional dashboard.
+              all managed through a professional dashboard.
             </p>
-            <ul className="mt-8 space-y-3">
+
+            <ul className="space-y-2 mb-8">
               {benefits.map((b) => (
-                <li
-                  key={b}
-                  className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-slate-200"
-                >
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-400/20 text-xs text-emerald-300">
-                    ✓
-                  </span>
+                <li key={b} className="flex items-start gap-3 border-b border-[#e6e3da] py-3 text-[0.86rem] text-[#1c1b17]">
+                  <span className="text-[#8b6914] font-bold mt-0.5 shrink-0">—</span>
                   {b}
                 </li>
               ))}
             </ul>
-            <div className="mt-8">
-              <Link
-                href="/auth/signup?role=tailor"
-                className="inline-block rounded-2xl bg-emerald-500 px-6 py-3 font-medium text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400"
-              >
-                Apply as a Tailor
-              </Link>
-            </div>
+
+            <Link
+              href="/auth/signup?role=tailor"
+              className="inline-flex items-center bg-[#0f0e0b] text-white text-[0.75rem] font-semibold tracking-[0.06em] uppercase px-7 py-3 rounded-[6px] hover:opacity-80 transition-opacity"
+            >
+              Apply as a Tailor
+            </Link>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/20 backdrop-blur">
-            <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-5">
-              <div className="flex items-center gap-4 border-b border-white/10 pb-4">
-                <div className="h-14 w-14 rounded-2xl bg-emerald-400/20 flex items-center justify-center text-2xl">
-                  🧵
-                </div>
-                <div>
-                  <p className="font-semibold">Lagos Bespoke Studio</p>
-                  <p className="text-sm text-slate-400">Lagos, Nigeria · Verified ✓</p>
-                </div>
-                <span className="ml-auto rounded-full bg-emerald-400/15 px-3 py-1 text-sm text-emerald-200">
-                  Active
-                </span>
+          {/* Mock tailor card */}
+          <div className="border border-[#e6e3da] rounded-[6px] overflow-hidden">
+            <div className="bg-[#f7f5f0] px-6 py-5 border-b border-[#e6e3da] flex items-center justify-between">
+              <div>
+                <p className="font-display text-[1.1rem] font-bold text-[#0f0e0b]">Lagos Bespoke Studio</p>
+                <p className="text-[0.78rem] text-[#6b6757] mt-0.5">Lagos, Nigeria</p>
               </div>
-              <div className="mt-5 grid gap-4 grid-cols-3">
-                <div className="rounded-2xl border border-white/10 bg-slate-800/70 p-4 text-center">
-                  <p className="text-sm text-slate-400">Rating</p>
-                  <p className="mt-1 text-xl font-semibold">4.8★</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-800/70 p-4 text-center">
-                  <p className="text-sm text-slate-400">Orders</p>
-                  <p className="mt-1 text-xl font-semibold">142</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-800/70 p-4 text-center">
-                  <p className="text-sm text-slate-400">Response</p>
-                  <p className="mt-1 text-xl font-semibold">&lt;2h</p>
-                </div>
+              <span className="text-[0.62rem] font-bold tracking-[0.08em] uppercase text-[#1a5c38] bg-[#e8f2ec] px-3 py-1 rounded-full">
+                Verified ✓
+              </span>
+            </div>
+            <div className="bg-white p-6">
+              <div className="grid grid-cols-3 gap-px bg-[#e6e3da] border border-[#e6e3da] rounded-[4px] overflow-hidden mb-5">
+                {[
+                  { label: "Rating", value: "4.8 ★" },
+                  { label: "Orders", value: "142" },
+                  { label: "Response", value: "<2h" },
+                ].map((s) => (
+                  <div key={s.label} className="bg-white p-4 text-center">
+                    <p className="text-[0.65rem] font-medium uppercase tracking-[0.08em] text-[#6b6757]">{s.label}</p>
+                    <p className="font-display text-[1.2rem] font-bold text-[#0f0e0b] mt-1">{s.value}</p>
+                  </div>
+                ))}
               </div>
-              <div className="mt-4 space-y-2">
-                <p className="text-sm text-slate-400">Specialisms</p>
-                <div className="flex flex-wrap gap-2">
-                  {["Suits", "Agbada", "Shirts", "Trousers", "Kaftans"].map((s) => (
-                    <span
-                      key={s}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-slate-200"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
+              <p className="text-[0.65rem] font-bold tracking-[0.1em] uppercase text-[#6b6757] mb-3">Specialisms</p>
+              <div className="flex flex-wrap gap-2">
+                {["Suits", "Agbada", "Shirts", "Trousers", "Kaftans"].map((s) => (
+                  <span
+                    key={s}
+                    className="text-[0.65rem] font-medium text-[#6b6757] bg-[#f7f5f0] border border-[#e6e3da] rounded-full px-3 py-1"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-5 pt-5 border-t border-[#e6e3da]">
+                <p className="text-[0.72rem] text-[#6b6757] italic">
+                  &quot;Starting from £180 · 4–6 weeks production · Worldwide shipping&quot;
+                </p>
               </div>
             </div>
           </div>
