@@ -41,11 +41,7 @@ function SignupForm() {
       return;
     }
 
-    if (role === "tailor") {
-      router.push("/apply");
-    } else {
-      router.push("/customer/dashboard");
-    }
+    window.location.href = role === "tailor" ? "/apply" : "/customer/dashboard";
   }
 
   return (

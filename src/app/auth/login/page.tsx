@@ -46,8 +46,8 @@ function LoginForm() {
       .single<{ role: string }>();
 
     const role = profile?.role ?? "customer";
-    router.push(redirectTo ?? roleDestinations[role] ?? "/customer/dashboard");
-    router.refresh();
+    const dest = redirectTo ?? roleDestinations[role] ?? "/customer/dashboard";
+    window.location.href = dest;
   }
 
   return (
