@@ -1,10 +1,10 @@
 // @ts-nocheck — types regenerated from Supabase after running: npx supabase gen types typescript
 import { createClient } from "./server";
-import type { TailorWithDetails, OrderWithParties } from "@/types/database";
+import type { Profile, TailorWithDetails, OrderWithParties } from "@/types/database";
 
 // ── Auth ─────────────────────────────────────────────────────
 
-export async function getUser() {
+export async function getUser(): Promise<Profile | null> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
