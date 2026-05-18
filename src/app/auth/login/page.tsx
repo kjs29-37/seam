@@ -50,10 +50,6 @@ function LoginForm() {
     router.refresh();
   }
 
-  async function loginAsDemo(role: "customer" | "tailor" | "admin") {
-    router.push(redirectTo ?? roleDestinations[role]);
-  }
-
   return (
     <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center px-6 py-16 bg-[#fdfcf9]">
       <div className="w-full max-w-md">
@@ -104,22 +100,6 @@ function LoginForm() {
             </button>
           </form>
 
-          {/* Demo bypass */}
-          <div className="mt-6 pt-6 border-t border-[#e6e3da]">
-            <p className="text-[0.65rem] font-bold tracking-[0.1em] uppercase text-[#9c9886] mb-3">Demo — explore as</p>
-            <div className="grid grid-cols-3 gap-2">
-              {(["customer", "tailor", "admin"] as const).map((role) => (
-                <button
-                  key={role}
-                  type="button"
-                  onClick={() => loginAsDemo(role)}
-                  className="border border-[#d0ccbf] text-[#6b6757] text-[0.68rem] font-semibold tracking-[0.06em] uppercase py-2.5 rounded-[6px] hover:bg-[#f7f5f0] hover:border-[#8b6914] hover:text-[#8b6914] transition capitalize"
-                >
-                  {role === "tailor" ? "Tailor" : role.charAt(0).toUpperCase() + role.slice(1)}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
 
         <p className="mt-6 text-center text-[0.84rem] text-[#6b6757]">

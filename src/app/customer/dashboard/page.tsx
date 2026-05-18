@@ -2,6 +2,7 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import StatCard from "@/components/dashboard/StatCard";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import Link from "next/link";
+import { getUser } from "@/lib/supabase/queries";
 
 const navItems = [
   { label: "Overview", href: "/customer/dashboard", icon: "🏠" },
@@ -66,7 +67,10 @@ const recentEnquiries = [
   },
 ];
 
-export default function CustomerDashboard() {
+export default async function CustomerDashboard() {
+  const profile = await getUser();
+  const firstName = profile?.full_name?.split(" ")[0] ?? "there";
+
   return (
     <DashboardLayout role="customer" navItems={navItems}>
       <div className="space-y-8">
@@ -74,7 +78,7 @@ export default function CustomerDashboard() {
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.62rem] font-bold tracking-[0.15em] uppercase text-[#8b6914]">Customer</p>
-            <h1 className="font-display text-[1.8rem] font-bold text-[#0f0e0b] leading-tight">Welcome back, Jane</h1>
+            <h1 className="font-display text-[1.8rem] font-bold text-[#0f0e0b] leading-tight">Welcome back, {firstName}</h1>
             <p className="text-[0.85rem] text-[#6b6757] mt-1">Here&apos;s what&apos;s happening with your orders.</p>
           </div>
           <Link

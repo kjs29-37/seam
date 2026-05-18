@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { tailors } from "@/lib/mock-tailors";
+import { getTailors } from "@/lib/supabase/queries";
 
 const garmentFilters = ["All", "Men", "Women", "Unisex"];
 const regionFilters = ["All Regions", "West Africa", "East Africa", "North Africa"];
@@ -13,7 +13,10 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default function TailorsPage() {
+export default async function TailorsPage() {
+  const tailors = await getTailors();
+  const featured = tailors.filter((t) => t.featured);
+
   return (
     <div className="bg-[#fdfcf9] min-h-screen">
       {/* Page hero */}
@@ -34,7 +37,6 @@ export default function TailorsPage() {
           {/* Sidebar filters */}
           <aside className="hidden lg:block w-[200px] shrink-0">
             <div className="sticky top-[120px] space-y-6">
-              {/* Garment type */}
               <div>
                 <p className="text-[0.65rem] font-bold tracking-[0.14em] uppercase text-[#6b6757] pb-2 border-b border-[#e6e3da] mb-0">
                   Garment Type
@@ -50,7 +52,6 @@ export default function TailorsPage() {
                 </ul>
               </div>
 
-              {/* Region */}
               <div>
                 <p className="text-[0.65rem] font-bold tracking-[0.14em] uppercase text-[#6b6757] pb-2 border-b border-[#e6e3da] mb-0">
                   Region
@@ -66,7 +67,6 @@ export default function TailorsPage() {
                 </ul>
               </div>
 
-              {/* Price range */}
               <div>
                 <p className="text-[0.65rem] font-bold tracking-[0.14em] uppercase text-[#6b6757] pb-2 border-b border-[#e6e3da] mb-0">
                   Price Range
@@ -86,7 +86,6 @@ export default function TailorsPage() {
 
           {/* Main grid */}
           <div className="flex-1">
-            {/* Sort bar */}
             <div className="flex items-center justify-between mb-5 pb-4 border-b border-[#e6e3da]">
               <p className="text-[0.82rem] text-[#6b6757]">
                 Showing <strong className="text-[#1c1b17]">{tailors.length}</strong> tailors
@@ -100,105 +99,110 @@ export default function TailorsPage() {
               </select>
             </div>
 
-            {/* Featured row */}
-            <div className="mb-2">
-              <p className="text-[0.65rem] font-bold tracking-[0.12em] uppercase text-[#8b6914] mb-3">
-                Featured Tailors
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[#e6e3da] border border-[#e6e3da] rounded-[6px] overflow-hidden mb-8">
-                {tailors.filter((t) => t.featured).map((tailor) => (
+            {featured.length > 0 && (
+              <div className="mb-2">
+                <p className="text-[0.65rem] font-bold tracking-[0.12em] uppercase text-[#8b6914] mb-3">
+                  Featured Tailors
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[#e6e3da] border border-[#e6e3da] rounded-[6px] overflow-hidden mb-8">
+                  {featured.map((tailor) => (
+                    <Link
+                      key={tailor.id}
+                      href={`/tailors/${tailor.id}`}
+                      className="bg-white hover:bg-[#f7f5f0] transition-colors flex flex-col cursor-pointer"
+                    >
+                      <div className="h-[200px] bg-[#f7f5f0] flex items-center justify-center border-b border-[#e6e3da]">
+                        <span className="text-5xl">🧵</span>
+                      </div>
+                      <div className="p-5">
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <div>
+                            <p className="text-[0.6rem] font-bold tracking-[0.1em] uppercase text-[#8b6914]">
+                              Featured
+                            </p>
+                            <h3 className="font-display text-[1.05rem] font-bold text-[#0f0e0b] leading-tight">
+                              {tailor.studio_name}
+                            </h3>
+                          </div>
+                          {tailor.verified && (
+                            <span className="shrink-0 text-[0.6rem] font-bold tracking-[0.06em] uppercase text-[#1a5c38] bg-[#e8f2ec] px-2 py-0.5 rounded-full">
+                              Verified
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[0.78rem] text-[#6b6757] mb-3">{tailor.location}</p>
+                        <div className="flex items-center gap-2 mb-3">
+                          <StarRating rating={tailor.rating} />
+                          <span className="text-[0.75rem] text-[#6b6757]">
+                            {tailor.rating} ({tailor.review_count} reviews)
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          {tailor.specialisms.slice(0, 3).map((s) => (
+                            <span key={s} className="text-[0.62rem] font-medium text-[#6b6757] bg-[#f7f5f0] border border-[#e6e3da] rounded-full px-2.5 py-0.5">
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[0.78rem] text-[#6b6757]">
+                            From <strong className="text-[#0f0e0b]">{tailor.currency}{tailor.price_min}</strong>
+                          </span>
+                          <span className="text-[0.72rem] font-semibold tracking-[0.04em] uppercase text-[#8b6914]">
+                            View Profile →
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <p className="text-[0.65rem] font-bold tracking-[0.12em] uppercase text-[#6b6757] mb-3">
+              All Tailors
+            </p>
+            {tailors.length === 0 ? (
+              <div className="text-center py-16 text-[#9c9886] text-[0.88rem]">
+                No tailors found. Check back soon.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#e6e3da] border border-[#e6e3da] rounded-[6px] overflow-hidden">
+                {tailors.map((tailor) => (
                   <Link
                     key={tailor.id}
                     href={`/tailors/${tailor.id}`}
                     className="bg-white hover:bg-[#f7f5f0] transition-colors flex flex-col cursor-pointer"
                   >
-                    {/* Image placeholder */}
-                    <div className="h-[200px] bg-[#f7f5f0] flex items-center justify-center border-b border-[#e6e3da]">
-                      <span className="text-5xl">🧵</span>
+                    <div className="aspect-[4/3] bg-[#f7f5f0] flex items-center justify-center border-b border-[#e6e3da]">
+                      <span className="text-4xl">🧵</span>
                     </div>
                     <div className="p-5">
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <div>
-                          <p className="text-[0.6rem] font-bold tracking-[0.1em] uppercase text-[#8b6914]">
-                            Featured
-                          </p>
-                          <h3 className="font-display text-[1.05rem] font-bold text-[#0f0e0b] leading-tight">
-                            {tailor.studioName}
-                          </h3>
-                        </div>
-                        {tailor.verified && (
-                          <span className="shrink-0 text-[0.6rem] font-bold tracking-[0.06em] uppercase text-[#1a5c38] bg-[#e8f2ec] px-2 py-0.5 rounded-full">
-                            Verified
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[0.78rem] text-[#6b6757] mb-3">{tailor.location}</p>
-                      <div className="flex items-center gap-2 mb-3">
+                      <p className="text-[0.6rem] font-bold tracking-[0.1em] uppercase text-[#9c9886] mb-0.5">
+                        {tailor.location}
+                      </p>
+                      <h3 className="font-display text-[0.95rem] font-bold text-[#0f0e0b] mb-1 leading-tight">
+                        {tailor.studio_name}
+                      </h3>
+                      <div className="flex items-center gap-1.5 mb-2">
                         <StarRating rating={tailor.rating} />
-                        <span className="text-[0.75rem] text-[#6b6757]">
-                          {tailor.rating} ({tailor.reviewCount} reviews)
-                        </span>
+                        <span className="text-[0.72rem] text-[#9c9886]">({tailor.review_count})</span>
                       </div>
-                      <div className="flex flex-wrap gap-1 mb-4">
-                        {tailor.specialisms.slice(0, 3).map((s) => (
-                          <span key={s} className="text-[0.62rem] font-medium text-[#6b6757] bg-[#f7f5f0] border border-[#e6e3da] rounded-full px-2.5 py-0.5">
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {tailor.specialisms.slice(0, 2).map((s) => (
+                          <span key={s} className="text-[0.6rem] font-medium text-[#6b6757] bg-[#f7f5f0] border border-[#e6e3da] rounded-full px-2 py-0.5">
                             {s}
                           </span>
                         ))}
                       </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[0.78rem] text-[#6b6757]">
-                          From <strong className="text-[#0f0e0b]">{tailor.currency}{tailor.priceMin}</strong>
-                        </span>
-                        <span className="text-[0.72rem] font-semibold tracking-[0.04em] uppercase text-[#8b6914]">
-                          View Profile →
-                        </span>
-                      </div>
+                      <p className="text-[0.75rem] text-[#6b6757]">
+                        From <strong className="text-[#0f0e0b]">{tailor.currency}{tailor.price_min}</strong>
+                      </p>
                     </div>
                   </Link>
                 ))}
               </div>
-            </div>
-
-            {/* All tailors grid */}
-            <p className="text-[0.65rem] font-bold tracking-[0.12em] uppercase text-[#6b6757] mb-3">
-              All Tailors
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#e6e3da] border border-[#e6e3da] rounded-[6px] overflow-hidden">
-              {tailors.map((tailor) => (
-                <Link
-                  key={tailor.id}
-                  href={`/tailors/${tailor.id}`}
-                  className="bg-white hover:bg-[#f7f5f0] transition-colors flex flex-col cursor-pointer"
-                >
-                  <div className="aspect-[4/3] bg-[#f7f5f0] flex items-center justify-center border-b border-[#e6e3da]">
-                    <span className="text-4xl">🧵</span>
-                  </div>
-                  <div className="p-5">
-                    <p className="text-[0.6rem] font-bold tracking-[0.1em] uppercase text-[#9c9886] mb-0.5">
-                      {tailor.location}
-                    </p>
-                    <h3 className="font-display text-[0.95rem] font-bold text-[#0f0e0b] mb-1 leading-tight">
-                      {tailor.studioName}
-                    </h3>
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <StarRating rating={tailor.rating} />
-                      <span className="text-[0.72rem] text-[#9c9886]">({tailor.reviewCount})</span>
-                    </div>
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {tailor.specialisms.slice(0, 2).map((s) => (
-                        <span key={s} className="text-[0.6rem] font-medium text-[#6b6757] bg-[#f7f5f0] border border-[#e6e3da] rounded-full px-2 py-0.5">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                    <p className="text-[0.75rem] text-[#6b6757]">
-                      From <strong className="text-[#0f0e0b]">{tailor.currency}{tailor.priceMin}</strong>
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            )}
           </div>
         </div>
       </div>
