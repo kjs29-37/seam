@@ -214,6 +214,22 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
               </div>
             )}
 
+            {/* Leave review — shown for delivered / issue_window / completed */}
+            {(order.status === "issue_window" || order.status === "completed") && (
+              <div className="bg-white border border-[#e6e3da] rounded-[6px] p-6">
+                <p className="text-[0.65rem] font-bold tracking-[0.1em] uppercase text-[#6b6757] mb-3">Your experience</p>
+                <p className="text-[0.8rem] text-[#6b6757] mb-4 leading-[1.5]">
+                  Share your feedback to help other customers discover this tailor.
+                </p>
+                <Link
+                  href={`/orders/${order.id}/review`}
+                  className="flex items-center justify-center w-full bg-[#8b6914] text-white text-[0.75rem] font-semibold tracking-[0.06em] uppercase py-3 rounded-[6px] hover:opacity-80 transition-opacity"
+                >
+                  Leave a Review ★
+                </Link>
+              </div>
+            )}
+
             {/* Contact tailor */}
             <div className="bg-white border border-[#e6e3da] rounded-[6px] p-6">
               <p className="text-[0.65rem] font-bold tracking-[0.1em] uppercase text-[#6b6757] mb-3">Need help?</p>

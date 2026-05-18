@@ -34,7 +34,7 @@ export default function Hero() {
             Join as Customer
           </Link>
           <Link
-            href="/auth/signup?role=tailor"
+            href="/apply"
             className="border border-[#d0ccbf] text-[#1c1b17] text-[0.78rem] font-semibold tracking-[0.06em] uppercase px-8 py-3.5 rounded-[6px] hover:bg-[#f7f5f0] transition"
           >
             Apply as Tailor
