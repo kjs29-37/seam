@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx shadcn@latest add badge card input label textarea select separator avatar dropdown-menu navigation-menu sheet tabs)"
+    ]
+  }
+}

@@ -1,32 +1,27 @@
 const statusStyles: Record<string, string> = {
-  // Order statuses
-  in_production: "bg-blue-400/15 text-blue-300",
-  shipped: "bg-purple-400/15 text-purple-300",
-  delivered: "bg-emerald-400/15 text-emerald-300",
-  completed: "bg-emerald-400/15 text-emerald-300",
-  issue_window_open: "bg-amber-400/15 text-amber-300",
-  issue_raised: "bg-red-400/15 text-red-300",
-  dispute_under_review: "bg-red-400/15 text-red-300",
-  payment_released: "bg-emerald-400/15 text-emerald-300",
-  quote_received: "bg-amber-400/15 text-amber-300",
-  quote_accepted: "bg-blue-400/15 text-blue-300",
-  payment_held_in_escrow: "bg-blue-400/15 text-blue-300",
-  enquiry_sent: "bg-slate-400/15 text-slate-300",
-  cancelled: "bg-red-400/15 text-red-300",
-  // Quote statuses
-  sent: "bg-amber-400/15 text-amber-300",
-  accepted: "bg-emerald-400/15 text-emerald-300",
-  rejected: "bg-red-400/15 text-red-300",
-  revised: "bg-blue-400/15 text-blue-300",
-  expired: "bg-slate-400/15 text-slate-300",
-  // Payment statuses
-  held_in_escrow: "bg-blue-400/15 text-blue-300",
-  released_to_tailor: "bg-emerald-400/15 text-emerald-300",
-  refunded: "bg-slate-400/15 text-slate-300",
-  // Tailor verification
-  pending: "bg-amber-400/15 text-amber-300",
-  verified: "bg-emerald-400/15 text-emerald-300",
-  rejected_verification: "bg-red-400/15 text-red-300",
+  in_production: "bg-blue-50 text-blue-700 border-blue-200",
+  shipped: "bg-purple-50 text-purple-700 border-purple-200",
+  delivered: "bg-[#e8f2ec] text-[#1a5c38] border-[#c0d9c8]",
+  completed: "bg-[#e8f2ec] text-[#1a5c38] border-[#c0d9c8]",
+  issue_window_open: "bg-amber-50 text-amber-700 border-amber-200",
+  issue_raised: "bg-red-50 text-red-700 border-red-200",
+  dispute_under_review: "bg-red-50 text-red-700 border-red-200",
+  payment_released: "bg-[#e8f2ec] text-[#1a5c38] border-[#c0d9c8]",
+  quote_received: "bg-amber-50 text-amber-700 border-amber-200",
+  quote_accepted: "bg-blue-50 text-blue-700 border-blue-200",
+  payment_held_in_escrow: "bg-blue-50 text-blue-700 border-blue-200",
+  enquiry_sent: "bg-[#f7f5f0] text-[#6b6757] border-[#e6e3da]",
+  cancelled: "bg-red-50 text-red-700 border-red-200",
+  sent: "bg-amber-50 text-amber-700 border-amber-200",
+  accepted: "bg-[#e8f2ec] text-[#1a5c38] border-[#c0d9c8]",
+  rejected: "bg-red-50 text-red-700 border-red-200",
+  revised: "bg-blue-50 text-blue-700 border-blue-200",
+  expired: "bg-[#f7f5f0] text-[#6b6757] border-[#e6e3da]",
+  held_in_escrow: "bg-blue-50 text-blue-700 border-blue-200",
+  released_to_tailor: "bg-[#e8f2ec] text-[#1a5c38] border-[#c0d9c8]",
+  refunded: "bg-[#f7f5f0] text-[#6b6757] border-[#e6e3da]",
+  pending: "bg-amber-50 text-amber-700 border-amber-200",
+  verified: "bg-[#e8f2ec] text-[#1a5c38] border-[#c0d9c8]",
 };
 
 const labelMap: Record<string, string> = {
@@ -39,16 +34,15 @@ const labelMap: Record<string, string> = {
   quote_received: "Quote Received",
   quote_accepted: "Quote Accepted",
   enquiry_sent: "Enquiry Sent",
-  rejected_verification: "Rejected",
 };
 
-type Props = { status: string };
-
-export default function StatusBadge({ status }: Props) {
-  const style = statusStyles[status] ?? "bg-slate-400/15 text-slate-300";
-  const label = labelMap[status] ?? status.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+export default function StatusBadge({ status }: { status: string }) {
+  const style = statusStyles[status] ?? "bg-[#f7f5f0] text-[#6b6757] border-[#e6e3da]";
+  const label =
+    labelMap[status] ??
+    status.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${style}`}>
+    <span className={`inline-flex items-center border rounded-full px-2.5 py-0.5 text-[0.65rem] font-semibold tracking-[0.04em] uppercase ${style}`}>
       {label}
     </span>
   );

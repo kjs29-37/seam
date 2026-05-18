@@ -15,72 +15,97 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-        <Link href="/" className="text-xl font-semibold tracking-tight text-white">
-          SEAM
-        </Link>
+    <header className="sticky top-0 z-50 bg-white border-b border-[#e6e3da]">
+      {/* Announce bar */}
+      <div className="bg-[#0f0e0b] text-white/70 text-center text-[0.7rem] tracking-[0.12em] uppercase py-2 px-6">
+        Verified tailors worldwide — escrow-protected payments on every order
+      </div>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
+      {/* Main header */}
+      <div className="mx-auto max-w-[1280px] px-8 h-[72px] grid grid-cols-3 items-center">
+        {/* Left nav */}
+        <nav className="hidden md:flex items-center gap-0">
+          {navLinks.slice(0, 2).map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-slate-300 transition hover:text-white"
+              className="text-[0.75rem] font-medium tracking-[0.08em] uppercase text-[#6b6757] px-5 h-[72px] flex items-center border-b-2 border-transparent hover:text-[#1c1b17] transition-colors"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Centre logo */}
+        <div className="flex justify-center">
+          <Link href="/" className="flex flex-col items-center">
+            <span className="font-display text-[1.65rem] font-bold tracking-[-0.02em] text-[#0f0e0b] leading-none">
+              SEAM
+            </span>
+            <span className="text-[0.55rem] tracking-[0.2em] uppercase text-[#6b6757] mt-0.5">
+              Bespoke, Worldwide
+            </span>
+          </Link>
+        </div>
+
+        {/* Right actions */}
+        <div className="hidden md:flex items-center justify-end gap-1">
+          <Link
+            href="/tailors"
+            className="text-[0.75rem] font-medium tracking-[0.08em] uppercase text-[#6b6757] px-5 h-[72px] flex items-center border-b-2 border-transparent hover:text-[#1c1b17] transition-colors"
+          >
+            Browse Tailors
+          </Link>
           <Link
             href="/auth/login"
-            className="rounded-2xl px-4 py-2 text-sm text-slate-300 transition hover:text-white"
+            className="text-[0.75rem] font-medium tracking-[0.08em] uppercase text-[#6b6757] px-4 h-[72px] flex items-center hover:text-[#1c1b17] transition-colors"
           >
-            Log in
+            Sign In
           </Link>
           <Link
             href="/auth/signup"
-            className="rounded-2xl bg-emerald-500 px-5 py-2 text-sm font-medium text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400"
+            className="ml-2 bg-[#0f0e0b] text-white text-[0.72rem] font-semibold tracking-[0.06em] uppercase px-5 py-2.5 rounded-[6px] hover:opacity-80 transition-opacity"
           >
             Get Started
           </Link>
         </div>
 
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger className="md:hidden rounded-lg p-2 text-white hover:bg-white/10 transition">
-            <Menu className="h-5 w-5" />
-          </SheetTrigger>
-          <SheetContent side="right" className="bg-slate-950 border-white/10 text-white w-72">
-            <div className="mt-8 flex flex-col gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="text-lg text-slate-300 hover:text-white transition"
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="border-t border-white/10 pt-6 flex flex-col gap-3">
-                <Link
-                  href="/auth/login"
-                  className="rounded-2xl border border-white/15 px-4 py-3 text-center text-sm font-medium text-white transition hover:bg-white/10"
-                >
-                  Log in
-                </Link>
-                <Link
-                  href="/auth/signup"
-                  className="rounded-2xl bg-emerald-500 px-4 py-3 text-center text-sm font-medium text-slate-950 transition hover:bg-emerald-400"
-                >
-                  Get Started
-                </Link>
+        {/* Mobile */}
+        <div className="flex justify-end md:hidden col-span-2">
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger className="p-2 text-[#1c1b17] hover:bg-[#f7f5f0] rounded transition">
+              <Menu className="h-5 w-5" />
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-white border-[#e6e3da] w-72">
+              <div className="mt-8 flex flex-col gap-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="text-sm font-medium tracking-[0.06em] uppercase text-[#6b6757] hover:text-[#1c1b17] py-3 border-b border-[#e6e3da] transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <div className="pt-6 flex flex-col gap-3">
+                  <Link
+                    href="/auth/login"
+                    className="border border-[#d0ccbf] rounded-[6px] px-4 py-3 text-center text-sm font-medium text-[#1c1b17] hover:bg-[#f7f5f0] transition"
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/auth/signup"
+                    className="bg-[#0f0e0b] text-white rounded-[6px] px-4 py-3 text-center text-sm font-semibold tracking-[0.04em] hover:opacity-80 transition"
+                  >
+                    Get Started
+                  </Link>
+                </div>
               </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

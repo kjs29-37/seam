@@ -1,42 +1,48 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-6 py-16">
-      <div className="w-full max-w-md rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
-        <h1 className="text-2xl font-semibold text-white">Welcome back</h1>
-        <p className="mt-2 text-sm text-slate-400">Sign in to your SEAM account</p>
+    <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center px-6 py-16 bg-[#fdfcf9]">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <p className="text-[0.65rem] font-bold tracking-[0.16em] uppercase text-[#8b6914] mb-2">Welcome Back</p>
+          <h1 className="font-display text-[2rem] font-bold tracking-[-0.02em] text-[#0f0e0b]">Sign In</h1>
+        </div>
 
-        <form className="mt-8 space-y-5">
-          <div className="space-y-2">
-            <Label htmlFor="email" className="text-slate-300">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-emerald-500"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password" className="text-slate-300">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-emerald-500"
-            />
-          </div>
-          <Button className="w-full bg-emerald-500 text-slate-950 hover:bg-emerald-400 rounded-2xl font-medium shadow-lg shadow-emerald-500/20">
-            Sign In
-          </Button>
-        </form>
+        <div className="bg-white border border-[#e6e3da] rounded-[6px] p-8">
+          <form className="space-y-5">
+            <div>
+              <label className="block text-[0.68rem] font-bold tracking-[0.08em] uppercase text-[#6b6757] mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                className="w-full px-4 py-3 border border-[#d0ccbf] rounded-[6px] text-[0.9rem] bg-[#fdfcf9] text-[#1c1b17] placeholder:text-[#9c9886] focus:outline-none focus:border-[#8b6914] focus:ring-2 focus:ring-[#8b6914]/10 transition"
+              />
+            </div>
+            <div>
+              <label className="block text-[0.68rem] font-bold tracking-[0.08em] uppercase text-[#6b6757] mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                className="w-full px-4 py-3 border border-[#d0ccbf] rounded-[6px] text-[0.9rem] bg-[#fdfcf9] text-[#1c1b17] placeholder:text-[#9c9886] focus:outline-none focus:border-[#8b6914] focus:ring-2 focus:ring-[#8b6914]/10 transition"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-[#0f0e0b] text-white text-[0.78rem] font-semibold tracking-[0.06em] uppercase py-3.5 rounded-[6px] hover:opacity-80 transition-opacity mt-2"
+            >
+              Sign In
+            </button>
+          </form>
+        </div>
 
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <p className="mt-6 text-center text-[0.84rem] text-[#6b6757]">
           Don&apos;t have an account?{" "}
-          <Link href="/auth/signup" className="text-emerald-400 hover:text-emerald-300">
+          <Link href="/auth/signup" className="text-[#8b6914] font-medium hover:underline underline-offset-2">
             Sign up
           </Link>
         </p>
