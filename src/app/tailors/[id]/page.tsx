@@ -11,8 +11,9 @@ function StarRating({ rating, large }: { rating: number; large?: boolean }) {
   );
 }
 
-export default function TailorProfilePage({ params }: { params: { id: string } }) {
-  const tailor = tailors.find((t) => t.id === params.id);
+export default async function TailorProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const tailor = tailors.find((t) => t.id === id);
   if (!tailor) notFound();
 
   return (

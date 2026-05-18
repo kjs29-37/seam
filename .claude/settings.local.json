@@ -6,7 +6,9 @@
       "Bash(npm run *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(curl -s http://localhost:3000/tailors/lagos-bespoke)",
+      "Bash(git commit *)"
     ]
   }
 }
