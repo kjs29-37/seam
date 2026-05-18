@@ -162,13 +162,13 @@ export default function TailorProfilePage({ params }: { params: { id: string } }
               </div>
               <div className="p-6 space-y-3">
                 <Link
-                  href={`/auth/signup?tailor=${tailor.id}`}
+                  href={`/enquiry/new?tailor=${tailor.id}`}
                   className="flex items-center justify-center w-full bg-[#0f0e0b] text-white text-[0.75rem] font-semibold tracking-[0.06em] uppercase py-3.5 rounded-[6px] hover:opacity-80 transition-opacity"
                 >
                   Request a Quote
                 </Link>
                 <Link
-                  href={`/auth/signup?tailor=${tailor.id}`}
+                  href={`/enquiry/new?tailor=${tailor.id}`}
                   className="flex items-center justify-center w-full border border-[#d0ccbf] text-[#1c1b17] text-[0.75rem] font-semibold tracking-[0.06em] uppercase py-3.5 rounded-[6px] hover:bg-[#f7f5f0] transition"
                 >
                   Message / Enquire

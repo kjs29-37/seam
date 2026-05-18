@@ -3,7 +3,10 @@
     "allow": [
       "Bash(npx shadcn@latest add badge card input label textarea select separator avatar dropdown-menu navigation-menu sheet tabs)",
       "Bash(mkdir -p /Users/sarham/Desktop/SEAM/src/app/tailors/\\\\[id\\\\])",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
