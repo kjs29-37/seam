@@ -1,4 +1,5 @@
 import { getOrder } from "@/lib/mock-orders";
+import { getSession } from "@/lib/demo-auth";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import StatusBadge from "@/components/dashboard/StatusBadge";
@@ -25,6 +26,12 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
   const order = getOrder(id);
   if (!order) notFound();
 
+  const session = await getSession();
+  const dashboardHref =
+    session?.role === "tailor" ? "/tailor/dashboard" :
+    session?.role === "admin"  ? "/admin/dashboard"  :
+    "/customer/dashboard";
+
   const isShipped = ["shipped", "delivered", "issue_window", "completed"].includes(order.status);
 
   return (
@@ -34,7 +41,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
         <div className="mx-auto max-w-[1000px] flex items-center gap-2 text-[0.75rem] text-[#6b6757]">
           <Link href="/" className="hover:text-[#1c1b17] transition">Home</Link>
           <span className="text-[#d0ccbf]">›</span>
-          <Link href="/customer/dashboard" className="hover:text-[#1c1b17] transition">Dashboard</Link>
+          <Link href={dashboardHref} className="hover:text-[#1c1b17] transition">Dashboard</Link>
           <span className="text-[#d0ccbf]">›</span>
           <span className="text-[#1c1b17] font-medium">Order {order.id}</span>
         </div>

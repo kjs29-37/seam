@@ -81,11 +81,15 @@ export default function MessagesPage() {
   const [convos, setConvos] = useState(conversations);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [dashboardHref, setDashboardHref] = useState("/customer/dashboard");
+  const [myInitial, setMyInitial] = useState("?");
 
   useEffect(() => {
-    const role = document.cookie.split(";").map((c) => c.trim()).find((c) => c.startsWith("seam_role="))?.split("=")[1];
+    const get = (name: string) => document.cookie.split(";").map((c) => c.trim()).find((c) => c.startsWith(name + "="))?.split("=")[1];
+    const role = get("seam_role");
+    const name = decodeURIComponent(get("seam_name") ?? "");
     if (role === "tailor") setDashboardHref("/tailor/dashboard");
     else if (role === "admin") setDashboardHref("/admin/dashboard");
+    if (name) setMyInitial(name[0].toUpperCase());
   }, []);
 
   const active = convos.find((c) => c.id === activeId)!;
@@ -201,7 +205,7 @@ export default function MessagesPage() {
                     <div className={`h-7 w-7 rounded-full flex items-center justify-center text-[0.65rem] font-bold shrink-0 mt-0.5 ${
                       isMe ? "bg-[#8b6914] text-white" : "bg-[#0f0e0b] text-white"
                     }`}>
-                      {isMe ? "J" : active.tailorName[0]}
+                      {isMe ? myInitial : active.tailorName[0]}
                     </div>
                     <div className={`max-w-[72%] ${isMe ? "items-end" : "items-start"} flex flex-col gap-1`}>
                       <div className={`px-4 py-3 rounded-[6px] text-[0.88rem] leading-[1.6] ${

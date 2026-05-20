@@ -1,8 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+
+function getCookie(name: string): string | undefined {
+  return document.cookie.split(";").map((c) => c.trim()).find((c) => c.startsWith(name + "="))?.split("=")[1];
+}
 
 const criteria = [
   { key: "fit", label: "Fit & Accuracy" },
@@ -40,8 +44,23 @@ export default function LeaveReviewPage() {
   const [overall, setOverall] = useState(0);
   const [ratings, setRatings] = useState<Record<string, number>>({});
   const [comment, setComment] = useState("");
-  const [publicName, setPublicName] = useState("Jane D.");
+  const [publicName, setPublicName] = useState("");
+  const [dashboardHref, setDashboardHref] = useState("/customer/dashboard");
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const name = getCookie("seam_name") ?? "";
+    const role = getCookie("seam_role") ?? "";
+    // Abbreviate to "First L." for display name default
+    const parts = decodeURIComponent(name).split(" ");
+    const abbreviated = parts.length > 1 ? `${parts[0]} ${parts[parts.length - 1][0]}.` : parts[0];
+    setPublicName(abbreviated);
+    setDashboardHref(
+      role === "tailor" ? "/tailor/dashboard" :
+      role === "admin"  ? "/admin/dashboard"  :
+      "/customer/dashboard"
+    );
+  }, []);
 
   function setRating(key: string, val: number) {
     setRatings((prev) => ({ ...prev, [key]: val }));
@@ -66,7 +85,7 @@ export default function LeaveReviewPage() {
             Thank you for your feedback. It helps other customers find trusted tailors on SEAM.
           </p>
           <Link
-            href="/customer/dashboard"
+            href={dashboardHref}
             className="bg-[#0f0e0b] text-white text-[0.75rem] font-semibold tracking-[0.06em] uppercase px-8 py-3.5 rounded-[6px] hover:opacity-80 transition-opacity"
           >
             Back to Dashboard
