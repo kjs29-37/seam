@@ -51,7 +51,7 @@ function LoginForm() {
   }
 
   const demoAccounts = [
-    { label: "Admin", email: "admin@seam.com", password: "admin123", icon: "🔑" },
+    { label: "Admin", email: "admin1@seam.com", password: "admin123", icon: "🔑" },
     { label: "Customer", email: "customer@seam.com", password: "customer123", icon: "👤" },
     { label: "Tailor", email: "tailor@seam.com", password: "tailor123", icon: "🧵" },
   ];
