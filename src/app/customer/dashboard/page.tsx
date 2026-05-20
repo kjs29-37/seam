@@ -2,7 +2,7 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import StatCard from "@/components/dashboard/StatCard";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import Link from "next/link";
-import { getUser } from "@/lib/supabase/queries";
+import { getSession } from "@/lib/supabase/queries";
 
 const navItems = [
   { label: "Overview", href: "/customer/dashboard", icon: "🏠" },
@@ -68,8 +68,8 @@ const recentEnquiries = [
 ];
 
 export default async function CustomerDashboard() {
-  const profile = await getUser();
-  const firstName = profile?.full_name?.split(" ")[0] ?? "there";
+  const session = await getSession();
+  const firstName = (session?.user?.user_metadata?.full_name as string | undefined)?.split(" ")[0] ?? "there";
 
   return (
     <DashboardLayout role="customer" navItems={navItems}>

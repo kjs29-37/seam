@@ -485,6 +485,11 @@ insert into public.profiles (id, role, full_name)
 values ('00000000-0000-0000-0000-000000000099', 'admin', 'SEAM Admin')
 on conflict (id) do update set role = 'admin', full_name = 'SEAM Admin';
 
+-- Ensure auth metadata also carries the role so login works without a DB round trip
+update auth.users
+set raw_user_meta_data = raw_user_meta_data || '{"role":"admin","full_name":"SEAM Admin"}'::jsonb
+where id = '00000000-0000-0000-0000-000000000099';
+
 insert into public.tailors (id, user_id, studio_name, location, country, region, bio, verified, featured, price_min, price_max, currency, delivery_weeks, response_time, rating, review_count) values
   ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'Lagos Bespoke Studio', 'Lagos, Nigeria', 'Nigeria', 'West Africa', 'Three generations of tailoring excellence from Lagos Island. We specialise in bespoke suits and formal African wear, blending traditional craftsmanship with contemporary silhouettes.', true, true, 180, 1200, 'GBP', 6, 'within 24 hours', 4.9, 48),
   ('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'Nairobi Tailors Co.', 'Nairobi, Kenya', 'Kenya', 'East Africa', 'East Africa''s premier bespoke studio. Known for immaculate construction and stunning bridal work.', true, true, 220, 1800, 'GBP', 8, 'within 12 hours', 4.8, 34),

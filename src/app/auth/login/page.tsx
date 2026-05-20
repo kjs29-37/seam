@@ -39,13 +39,8 @@ function LoginForm() {
       return;
     }
 
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", data.user.id)
-      .single<{ role: string }>();
-
-    const role = profile?.role ?? "customer";
+    // Role is stored in auth metadata — no extra DB round trip needed
+    const role = (data.user.user_metadata?.role as string | undefined) ?? "customer";
     const dest = redirectTo ?? roleDestinations[role] ?? "/customer/dashboard";
     window.location.href = dest;
   }

@@ -4,6 +4,16 @@ import type { Profile, TailorWithDetails, OrderWithParties } from "@/types/datab
 
 // ── Auth ─────────────────────────────────────────────────────
 
+// Fast: reads JWT from cookie — no network call.
+// Use this for display-only data (names, role in UI).
+export async function getSession() {
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  return session;
+}
+
+// Secure: validates token with Supabase auth server — one network call.
+// Use this when you need to trust the user identity (before writing to DB).
 export async function getUser(): Promise<Profile | null> {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
