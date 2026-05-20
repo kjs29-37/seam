@@ -1,9 +1,7 @@
-// @ts-nocheck — Supabase types pending: npx supabase gen types typescript
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import StatCard from "@/components/dashboard/StatCard";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import Link from "next/link";
-import { getPendingApplications, getOpenDisputes } from "@/lib/supabase/queries";
 import AdminVerificationActions from "./AdminVerificationActions";
 
 const navItems = [
@@ -15,6 +13,38 @@ const navItems = [
   { label: "Disputes", href: "/admin/dashboard/disputes", icon: "⚠️" },
   { label: "Community", href: "/admin/dashboard/community", icon: "🌐" },
   { label: "Metrics", href: "/admin/dashboard/metrics", icon: "📊" },
+];
+
+const pendingApplications = [
+  {
+    id: "APP-001",
+    studio_name: "Abuja Atelier",
+    location: "Abuja, Nigeria",
+    owner_name: "Chidi Okeke",
+    email: "chidi@abujaatelier.com",
+    specialisms: ["Agbada", "Senator Suits", "Bespoke Menswear"],
+    bio: "We specialise in high-end Nigerian traditional wear and contemporary suits for the modern African gentleman.",
+    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "APP-002",
+    studio_name: "Kumasi Couture",
+    location: "Kumasi, Ghana",
+    owner_name: "Efua Asante",
+    email: "efua@kumasicouture.gh",
+    specialisms: ["Kente Weaving", "Womenswear", "Occasion Wear"],
+    bio: "Family-run studio with 20 years of experience creating authentic Ghanaian couture for diaspora clients worldwide.",
+    created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+const openDisputes = [
+  {
+    id: "DIS-001",
+    issue: "Wrong fabric used — ordered linen, received polyester blend",
+    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    order: { garment_type: "Summer Kaftan", amount: 195 },
+  },
 ];
 
 const recentOrders = [
@@ -32,12 +62,7 @@ function timeAgo(dateStr: string): string {
   return `${days} days ago`;
 }
 
-export default async function AdminDashboard() {
-  const [pendingApplications, openDisputes] = await Promise.all([
-    getPendingApplications(),
-    getOpenDisputes(),
-  ]);
-
+export default function AdminDashboard() {
   return (
     <DashboardLayout role="admin" navItems={navItems}>
       <div className="space-y-8">
@@ -45,7 +70,7 @@ export default async function AdminDashboard() {
         <div>
           <p className="text-[0.62rem] font-bold tracking-[0.15em] uppercase text-[#8b6914]">Admin</p>
           <h1 className="font-display text-[1.8rem] font-bold text-[#0f0e0b] leading-tight">Platform Overview</h1>
-          <p className="text-[0.85rem] text-[#6b6757] mt-1">SEAM concierge operations — live platform data</p>
+          <p className="text-[0.85rem] text-[#6b6757] mt-1">SEAM concierge operations — demo data</p>
         </div>
 
         {/* Platform metrics — row 1 */}
@@ -93,7 +118,7 @@ export default async function AdminDashboard() {
                       {app.email && (
                         <p className="text-[0.72rem] text-[#9c9886] mt-0.5">{app.email}</p>
                       )}
-                      {Array.isArray(app.specialisms) && app.specialisms.length > 0 && (
+                      {app.specialisms.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-3">
                           {app.specialisms.map((s: string) => (
                             <span key={s} className="text-[0.65rem] font-medium text-[#6b6757] bg-[#f7f5f0] border border-[#e6e3da] rounded-full px-2.5 py-0.5">
@@ -128,22 +153,19 @@ export default async function AdminDashboard() {
                       <div className="flex items-center gap-2 mb-1">
                         <StatusBadge status="dispute_under_review" />
                         <span className="text-[0.72rem] text-[#9c9886]">
-                          {d.id.slice(0, 8).toUpperCase()} · Raised {timeAgo(d.created_at)}
+                          {d.id} · Raised {timeAgo(d.created_at)}
                         </span>
                       </div>
                       <p className="font-display text-[1rem] font-bold text-[#0f0e0b]">
-                        {d.issue ?? "Dispute raised"}
+                        {d.issue}
                       </p>
                       <p className="text-[0.78rem] text-[#6b6757] mt-0.5">
-                        {d.order?.garment_type ?? "Order"}
-                        {d.order?.amount ? ` · £${d.order.amount}` : ""}
+                        {d.order.garment_type} · £{d.order.amount}
                       </p>
                     </div>
-                    {d.order?.amount && (
-                      <p className="font-display text-[1.4rem] font-bold text-[#0f0e0b]">
-                        £{d.order.amount}
-                      </p>
-                    )}
+                    <p className="font-display text-[1.4rem] font-bold text-[#0f0e0b]">
+                      £{d.order.amount}
+                    </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <button className="bg-[#1a5c38] text-white text-[0.72rem] font-semibold tracking-[0.06em] uppercase px-4 py-2.5 rounded-[6px] hover:opacity-80 transition-opacity">

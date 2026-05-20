@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/client";
 
 type Message = {
   id: string;
@@ -84,17 +83,9 @@ export default function MessagesPage() {
   const [dashboardHref, setDashboardHref] = useState("/customer/dashboard");
 
   useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) return;
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", user.id)
-        .single<{ role: string }>();
-      if (profile?.role === "tailor") setDashboardHref("/tailor/dashboard");
-      else if (profile?.role === "admin") setDashboardHref("/admin/dashboard");
-    });
+    const role = document.cookie.split(";").map((c) => c.trim()).find((c) => c.startsWith("seam_role="))?.split("=")[1];
+    if (role === "tailor") setDashboardHref("/tailor/dashboard");
+    else if (role === "admin") setDashboardHref("/admin/dashboard");
   }, []);
 
   const active = convos.find((c) => c.id === activeId)!;
