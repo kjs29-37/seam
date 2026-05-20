@@ -1,7 +1,7 @@
 const garmentTypes = [
   "Suit (2-piece)", "Suit (3-piece)", "Blazer", "Trousers / Pants",
   "Shirt", "Dress", "Gown / Evening Wear", "Bridal / Wedding Dress",
-  "Traditional / Cultural Wear", "Kaftan", "Agbada / Boubou",
+  "Áo Dài", "Salwar Kameez / Kurta", "Thai Silk Dress",
   "Jacket / Coat", "Casual Wear", "Other",
 ];
 

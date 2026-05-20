@@ -6,8 +6,8 @@ import Link from "next/link";
 const specialismOptions = [
   "Suits & Blazers", "Shirts & Tops", "Trousers & Chinos", "Evening Wear",
   "Wedding & Bridal", "Traditional / Cultural", "Dresses & Gowns", "Outerwear & Coats",
-  "Children's Wear", "Alterations & Repairs", "Agbada & Boubou", "Aso-Oke",
-  "Kente", "Ankara & Wax Print",
+  "Children's Wear", "Alterations & Repairs", "Áo Dài", "Thai Silk",
+  "Salwar Kameez", "Embroidery & Handcraft",
 ];
 
 const garmentOptions = [
@@ -15,8 +15,8 @@ const garmentOptions = [
 ];
 
 const regionOptions = [
-  "West Africa", "East Africa", "North Africa", "Southern Africa",
-  "Central Africa", "UK & Europe", "North America", "Other",
+  "Vietnam", "Thailand", "Bangladesh", "Southeast Asia",
+  "South Asia", "UK & Europe", "North America", "Other",
 ];
 
 function Checkbox({ label, checked, onChange }: { label: string; checked: boolean; onChange: () => void }) {
@@ -100,7 +100,7 @@ export default function ApplyPage() {
           <p className="text-[0.62rem] font-bold tracking-[0.15em] uppercase text-[#8b6914] mb-1">Apply to SEAM</p>
           <h1 className="font-display text-[2rem] font-bold text-[#0f0e0b] leading-tight">Join as a Verified Tailor</h1>
           <p className="text-[0.88rem] text-[#6b6757] mt-2 max-w-xl leading-[1.6]">
-            SEAM connects skilled tailors across Africa with customers worldwide. All applications are reviewed individually by our team.
+            SEAM connects skilled tailors across Southeast and South Asia with customers worldwide. All applications are reviewed individually by our team.
           </p>
         </div>
       </div>
@@ -131,11 +131,11 @@ export default function ApplyPage() {
           <div className="grid sm:grid-cols-2 gap-5">
             <div>
               <label className={labelClass}>Studio Name *</label>
-              <input type="text" placeholder="e.g. Lagos Bespoke Studio" value={form.studioName} onChange={(e) => update("studioName", e.target.value)} className={inputClass} />
+              <input type="text" placeholder="e.g. Bangkok Classic Tailors" value={form.studioName} onChange={(e) => update("studioName", e.target.value)} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Your Full Name *</label>
-              <input type="text" placeholder="e.g. Emeka Okafor" value={form.ownerName} onChange={(e) => update("ownerName", e.target.value)} className={inputClass} />
+              <input type="text" placeholder="e.g. Nguyen Van An" value={form.ownerName} onChange={(e) => update("ownerName", e.target.value)} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Email Address *</label>
@@ -143,11 +143,11 @@ export default function ApplyPage() {
             </div>
             <div>
               <label className={labelClass}>Phone (with country code)</label>
-              <input type="tel" placeholder="+234 801 234 5678" value={form.phone} onChange={(e) => update("phone", e.target.value)} className={inputClass} />
+              <input type="tel" placeholder="+84 90 123 4567" value={form.phone} onChange={(e) => update("phone", e.target.value)} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>City, Country *</label>
-              <input type="text" placeholder="e.g. Lagos, Nigeria" value={form.location} onChange={(e) => update("location", e.target.value)} className={inputClass} />
+              <input type="text" placeholder="e.g. Hanoi, Vietnam" value={form.location} onChange={(e) => update("location", e.target.value)} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Region</label>

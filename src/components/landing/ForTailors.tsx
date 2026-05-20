@@ -48,8 +48,8 @@ export default function ForTailors() {
           <div className="border border-[#e6e3da] rounded-[6px] overflow-hidden">
             <div className="bg-[#f7f5f0] px-6 py-5 border-b border-[#e6e3da] flex items-center justify-between">
               <div>
-                <p className="font-display text-[1.1rem] font-bold text-[#0f0e0b]">Lagos Bespoke Studio</p>
-                <p className="text-[0.78rem] text-[#6b6757] mt-0.5">Lagos, Nigeria</p>
+                <p className="font-display text-[1.1rem] font-bold text-[#0f0e0b]">Bangkok Classic Tailors</p>
+                <p className="text-[0.78rem] text-[#6b6757] mt-0.5">Bangkok, Thailand</p>
               </div>
               <span className="text-[0.62rem] font-bold tracking-[0.08em] uppercase text-[#1a5c38] bg-[#e8f2ec] px-3 py-1 rounded-full">
                 Verified ✓
@@ -70,7 +70,7 @@ export default function ForTailors() {
               </div>
               <p className="text-[0.65rem] font-bold tracking-[0.1em] uppercase text-[#6b6757] mb-3">Specialisms</p>
               <div className="flex flex-wrap gap-2">
-                {["Suits", "Agbada", "Shirts", "Trousers", "Kaftans"].map((s) => (
+                {["Suits", "Shirts", "Blazers", "Trousers", "Evening Wear"].map((s) => (
                   <span
                     key={s}
                     className="text-[0.65rem] font-medium text-[#6b6757] bg-[#f7f5f0] border border-[#e6e3da] rounded-full px-3 py-1"

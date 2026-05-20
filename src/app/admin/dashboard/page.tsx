@@ -18,22 +18,22 @@ const navItems = [
 const pendingApplications = [
   {
     id: "APP-001",
-    studio_name: "Abuja Atelier",
-    location: "Abuja, Nigeria",
-    owner_name: "Chidi Okeke",
-    email: "chidi@abujaatelier.com",
-    specialisms: ["Agbada", "Senator Suits", "Bespoke Menswear"],
-    bio: "We specialise in high-end Nigerian traditional wear and contemporary suits for the modern African gentleman.",
+    studio_name: "Chiang Mai Textiles",
+    location: "Chiang Mai, Thailand",
+    owner_name: "Nattapong Suwan",
+    email: "nattapong@chiangmaistudio.com",
+    specialisms: ["Thai Silk", "Occasion Wear", "Bespoke Womenswear"],
+    bio: "We specialise in hand-woven Thai silk garments, working directly with artisan weavers in the Chiang Mai highlands to bring authentic Thai textile culture to a global audience.",
     created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
   },
   {
     id: "APP-002",
-    studio_name: "Kumasi Couture",
-    location: "Kumasi, Ghana",
-    owner_name: "Efua Asante",
-    email: "efua@kumasicouture.gh",
-    specialisms: ["Kente Weaving", "Womenswear", "Occasion Wear"],
-    bio: "Family-run studio with 20 years of experience creating authentic Ghanaian couture for diaspora clients worldwide.",
+    studio_name: "Chittagong Craft Studio",
+    location: "Chittagong, Bangladesh",
+    owner_name: "Rahima Begum",
+    email: "rahima@chittagongcraft.bd",
+    specialisms: ["Nakshi Kantha", "Sarees", "Occasion Wear"],
+    bio: "Family-run studio with 15 years of experience in traditional Bangladeshi hand embroidery. We create bespoke sarees and occasion wear for diaspora clients worldwide.",
     created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
   },
 ];
@@ -48,10 +48,10 @@ const openDisputes = [
 ];
 
 const recentOrders = [
-  { id: "ORD-001", customer: "Jane D.", tailor: "Lagos Bespoke Studio", garment: "2-Piece Suit", status: "in_production", amount: "£380" },
-  { id: "ORD-002", customer: "Kofi A.", tailor: "Lagos Bespoke Studio", garment: "Kente Kaftan", status: "shipped", amount: "£210" },
-  { id: "ORD-003", customer: "Amara K.", tailor: "Cairo Bespoke", garment: "Linen Shirt", status: "delivered", amount: "£95" },
-  { id: "ORD-004", customer: "Fatima M.", tailor: "Nairobi Tailors Co.", garment: "Wedding Dress", status: "issue_raised", amount: "£820" },
+  { id: "ORD-001", customer: "Jane D.", tailor: "Bangkok Classic Tailors", garment: "2-Piece Suit", status: "in_production", amount: "£380" },
+  { id: "ORD-002", customer: "Kofi A.", tailor: "Hanoi Silk Atelier", garment: "Silk Áo Dài", status: "shipped", amount: "£210" },
+  { id: "ORD-003", customer: "Amara K.", tailor: "Saigon Bespoke Co.", garment: "Dress Shirt", status: "delivered", amount: "£95" },
+  { id: "ORD-004", customer: "Fatima M.", tailor: "Dhaka Thread Co.", garment: "Wedding Dress", status: "issue_raised", amount: "£820" },
 ];
 
 function timeAgo(dateStr: string): string {

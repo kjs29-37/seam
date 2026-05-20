@@ -19,8 +19,8 @@ const navItems = [
 const activeOrders = [
   {
     id: "ORD-001",
-    tailor: "Lagos Bespoke Studio",
-    tailorId: "lagos-bespoke",
+    tailor: "Bangkok Classic Tailors",
+    tailorId: "bangkok-tailors",
     garment: "2-Piece Suit",
     status: "in_production",
     escrow: "held",
@@ -29,9 +29,9 @@ const activeOrders = [
   },
   {
     id: "ORD-002",
-    tailor: "Accra Threads",
-    tailorId: "accra-threads",
-    garment: "Kente Kaftan",
+    tailor: "Hanoi Silk Atelier",
+    tailorId: "hanoi-silk",
+    garment: "Silk Áo Dài",
     status: "shipped",
     escrow: "held",
     amount: "£210",
@@ -42,9 +42,9 @@ const activeOrders = [
 const pendingQuotes = [
   {
     id: "QT-001",
-    tailor: "Nairobi Tailors Co.",
-    tailorId: "nairobi-tailors",
-    garment: "Wedding Dress",
+    tailor: "Silom Couture House",
+    tailorId: "silom-couture",
+    garment: "Thai Silk Evening Gown",
     amount: "£620",
     expires: "2 days",
   },
@@ -53,15 +53,15 @@ const pendingQuotes = [
 const recentEnquiries = [
   {
     id: "ENQ-001",
-    tailor: "Nairobi Tailors Co.",
-    garment: "Wedding Dress",
+    tailor: "Silom Couture House",
+    garment: "Thai Silk Evening Gown",
     status: "quote_received",
     date: "2 days ago",
   },
   {
     id: "ENQ-002",
-    tailor: "Cairo Bespoke",
-    garment: "Linen Shirt",
+    tailor: "Saigon Bespoke Co.",
+    garment: "Slim-Fit Dress Shirt",
     status: "enquiry_sent",
     date: "5 days ago",
   },

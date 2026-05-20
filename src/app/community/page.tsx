@@ -16,61 +16,61 @@ type Look = {
 const looks: Look[] = [
   {
     id: "l1", emoji: "🤵", garmentType: "Suit",
-    title: "The Lagos Double-Breasted", tailorName: "Lagos Bespoke Studio",
-    tailorId: "lagos-bespoke", location: "Lagos, Nigeria", price: "From £380",
+    title: "The Bangkok Double-Breasted", tailorName: "Bangkok Classic Tailors",
+    tailorId: "bangkok-tailors", location: "Bangkok, Thailand", price: "From £380",
     tags: ["Suits", "Menswear", "Formal"], featured: true,
   },
   {
-    id: "l2", emoji: "👗", garmentType: "Gown",
-    title: "Ivory Mermaid Bridal Gown", tailorName: "Nairobi Tailors Co.",
-    tailorId: "nairobi-tailors", location: "Nairobi, Kenya", price: "From £620",
-    tags: ["Wedding", "Womenswear", "Bridal"], featured: true,
+    id: "l2", emoji: "👘", garmentType: "Áo Dài",
+    title: "Ivory Silk Wedding Áo Dài", tailorName: "Hanoi Silk Atelier",
+    tailorId: "hanoi-silk", location: "Hanoi, Vietnam", price: "From £280",
+    tags: ["Wedding", "Womenswear", "Silk"], featured: true,
   },
   {
-    id: "l3", emoji: "🧣", garmentType: "Kaftan",
-    title: "Kente Hand-Woven Kaftan", tailorName: "Accra Threads",
-    tailorId: "accra-threads", location: "Accra, Ghana", price: "From £210",
-    tags: ["Traditional", "Kente", "Unisex"],
+    id: "l3", emoji: "👗", garmentType: "Evening Wear",
+    title: "Thai Silk Evening Gown", tailorName: "Silom Couture House",
+    tailorId: "silom-couture", location: "Bangkok, Thailand", price: "From £250",
+    tags: ["Thai Silk", "Womenswear", "Evening"],
   },
   {
-    id: "l4", emoji: "👘", garmentType: "Boubou",
-    title: "Grand Boubou in Bazin Riche", tailorName: "Dakar Couture House",
-    tailorId: "dakar-couture", location: "Dakar, Senegal", price: "From £290",
-    tags: ["Traditional", "Menswear", "Formal"],
+    id: "l4", emoji: "🥻", garmentType: "Saree",
+    title: "Nakshi Kantha Embroidered Saree", tailorName: "Old Dhaka Stitch",
+    tailorId: "old-dhaka-stitch", location: "Dhaka, Bangladesh", price: "From £200",
+    tags: ["Traditional", "Womenswear", "Embroidery"],
   },
   {
     id: "l5", emoji: "👔", garmentType: "Shirt",
-    title: "Poplin Slim-Fit Dress Shirt", tailorName: "Cairo Bespoke",
-    tailorId: "cairo-bespoke", location: "Cairo, Egypt", price: "From £95",
+    title: "Slim-Fit Oxford Dress Shirt", tailorName: "Saigon Bespoke Co.",
+    tailorId: "saigon-bespoke", location: "Ho Chi Minh City, Vietnam", price: "From £120",
     tags: ["Shirts", "Menswear", "Business"],
   },
   {
-    id: "l6", emoji: "🥻", garmentType: "Dress",
-    title: "Ankara Print Wrap Dress", tailorName: "Kampala Stitch Co.",
-    tailorId: "kampala-stitch", location: "Kampala, Uganda", price: "From £160",
-    tags: ["Ankara", "Womenswear", "Casual"],
+    id: "l6", emoji: "👘", garmentType: "Kurta",
+    title: "Block-Print Indigo Kurta Set", tailorName: "Dhaka Thread Co.",
+    tailorId: "dhaka-threads", location: "Dhaka, Bangladesh", price: "From £95",
+    tags: ["Kurta", "Menswear", "Casual"],
   },
   {
-    id: "l7", emoji: "🧥", garmentType: "Jacket",
-    title: "Agbada Three-Piece Set", tailorName: "Lagos Bespoke Studio",
-    tailorId: "lagos-bespoke", location: "Lagos, Nigeria", price: "From £520",
-    tags: ["Traditional", "Agbada", "Menswear"],
-  },
-  {
-    id: "l8", emoji: "👗", garmentType: "Gown",
-    title: "Aso-Oke Evening Gown", tailorName: "Accra Threads",
-    tailorId: "accra-threads", location: "Accra, Ghana", price: "From £340",
-    tags: ["Traditional", "Womenswear", "Evening"],
-  },
-  {
-    id: "l9", emoji: "🤵", garmentType: "Suit",
-    title: "3-Piece Morning Suit", tailorName: "Nairobi Tailors Co.",
-    tailorId: "nairobi-tailors", location: "Nairobi, Kenya", price: "From £480",
+    id: "l7", emoji: "🤵", garmentType: "Suit",
+    title: "3-Piece Morning Suit", tailorName: "Bangkok Classic Tailors",
+    tailorId: "bangkok-tailors", location: "Bangkok, Thailand", price: "From £520",
     tags: ["Suits", "Menswear", "Wedding"],
+  },
+  {
+    id: "l8", emoji: "👗", garmentType: "Bridal",
+    title: "Embroidered Bridal Lehenga", tailorName: "Old Dhaka Stitch",
+    tailorId: "old-dhaka-stitch", location: "Dhaka, Bangladesh", price: "From £480",
+    tags: ["Bridal", "Womenswear", "Embroidery"],
+  },
+  {
+    id: "l9", emoji: "👘", garmentType: "Áo Dài",
+    title: "Modern Áo Dài with Lotus Embroidery", tailorName: "Hanoi Silk Atelier",
+    tailorId: "hanoi-silk", location: "Hanoi, Vietnam", price: "From £150",
+    tags: ["Áo Dài", "Womenswear", "Silk"],
   },
 ];
 
-const categories = ["All", "Suits", "Wedding", "Traditional", "Womenswear", "Menswear", "Shirts", "Evening"];
+const categories = ["All", "Suits", "Wedding", "Silk", "Womenswear", "Menswear", "Shirts", "Evening"];
 
 export default function CommunityPage() {
   const featured = looks.filter((l) => l.featured);

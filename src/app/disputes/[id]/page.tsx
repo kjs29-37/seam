@@ -32,7 +32,7 @@ const disputes: Record<string, Dispute> = {
     id: "DIS-001",
     orderId: "ORD-004",
     customer: "Fatima Malik",
-    tailor: "Nairobi Tailors Co.",
+    tailor: "Dhaka Thread Co.",
     garment: "Wedding Dress",
     amount: 820,
     currency: "£",
@@ -47,7 +47,7 @@ const disputes: Record<string, Dispute> = {
     timeline: [
       { actor: "Fatima Malik", role: "customer", action: "Raised dispute", detail: "Measurement discrepancy — bust 4cm off", date: "17 May 2026, 09:14" },
       { actor: "SEAM", role: "admin", action: "Escrow paused", detail: "£820 held pending resolution", date: "17 May 2026, 09:15" },
-      { actor: "Nairobi Tailors Co.", role: "tailor", action: "Submitted response", detail: "Offered £80 partial refund", date: "17 May 2026, 14:30" },
+      { actor: "Dhaka Thread Co.", role: "tailor", action: "Submitted response", detail: "Offered £80 partial refund", date: "17 May 2026, 14:30" },
       { actor: "SEAM Admin", role: "admin", action: "Under review", detail: "Reviewing photo evidence and spec sheet", date: "18 May 2026, 10:00" },
     ],
   },

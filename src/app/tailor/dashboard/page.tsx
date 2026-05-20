@@ -28,7 +28,7 @@ const newEnquiries = [
   {
     id: "ENQ-013",
     customer: "Amara K.",
-    garment: "Aso-Oke Gown",
+    garment: "Thai Silk Evening Gown",
     budget: "£250–£350",
     deadline: "6 weeks",
     date: "Yesterday",
@@ -48,7 +48,7 @@ const activeOrders = [
   {
     id: "ORD-002",
     customer: "Kofi A.",
-    garment: "Kente Kaftan",
+    garment: "Silk Áo Dài",
     status: "shipped",
     payout: "£189",
     payoutStatus: "pending",
@@ -57,7 +57,7 @@ const activeOrders = [
   {
     id: "ORD-003",
     customer: "Fatima M.",
-    garment: "Ankara Blouse",
+    garment: "Embroidered Kurta Set",
     status: "issue_window",
     payout: "£124",
     payoutStatus: "eligible",
