@@ -30,7 +30,7 @@ export async function proxy(request: NextRequest) {
 
   // Protect dashboard routes
   const { pathname } = request.nextUrl;
-  const protectedPrefixes = ["/customer", "/tailor", "/admin", "/messages", "/orders", "/checkout"];
+  const protectedPrefixes = ["/customer", "/tailor", "/admin", "/messages", "/orders", "/checkout", "/enquiry"];
   const isProtected = protectedPrefixes.some((p) => pathname.startsWith(p));
 
   if (isProtected && !user) {

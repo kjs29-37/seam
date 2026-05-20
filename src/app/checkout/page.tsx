@@ -3,11 +3,9 @@
 import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { tailors } from "@/lib/mock-tailors";
-
-const quoteData: Record<string, { garment: string; amount: number; tailorId: string; quoteId: string }> = {
-  "QT-001": { garment: "Wedding Dress", amount: 620, tailorId: "nairobi-tailors", quoteId: "QT-001" },
-  "QT-002": { garment: "Evening Gown", amount: 450, tailorId: "dakar-couture", quoteId: "QT-002" },
+const quoteData: Record<string, { garment: string; amount: number }> = {
+  "QT-001": { garment: "Wedding Dress", amount: 620 },
+  "QT-002": { garment: "Evening Gown", amount: 450 },
 };
 
 const platformFee = (amount: number) => Math.round(amount * 0.05);
@@ -16,11 +14,10 @@ function CheckoutForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const quoteId = searchParams.get("quote") ?? "QT-001";
-  const tailorId = searchParams.get("tailor") ?? "lagos-bespoke";
+  const quoteId = searchParams.get("quote") ?? "";
+  const tailorName = searchParams.get("tailor") ?? "Your Tailor";
 
-  const tailor = tailors.find((t) => t.id === tailorId) ?? tailors[0];
-  const quote = quoteData[quoteId] ?? { garment: "Bespoke Garment", amount: 380, tailorId, quoteId };
+  const quote = quoteData[quoteId] ?? { garment: "Bespoke Garment", amount: 380 };
 
   const fee = platformFee(quote.amount);
   const total = quote.amount + fee;
@@ -44,7 +41,7 @@ function CheckoutForm() {
     if (!name || cardNumber.replace(/\s/g, "").length < 16 || expiry.length < 4 || cvc.length < 3) return;
     setPaying(true);
     await new Promise((r) => setTimeout(r, 1800));
-    router.push("/orders/ORD-001?paid=1");
+    window.location.href = "/customer/dashboard";
   }
 
   const ready = name && cardNumber.replace(/\s/g, "").length === 16 && expiry.length >= 4 && cvc.length >= 3;
@@ -181,8 +178,7 @@ function CheckoutForm() {
                 <div className="flex items-center gap-3 mb-5 pb-5 border-b border-[#e6e3da]">
                   <div className="h-10 w-10 bg-[#f7f5f0] rounded-[6px] flex items-center justify-center text-xl shrink-0">🧵</div>
                   <div>
-                    <p className="text-[0.84rem] font-semibold text-[#0f0e0b]">{tailor.studioName}</p>
-                    <p className="text-[0.72rem] text-[#6b6757]">{tailor.location}</p>
+                    <p className="text-[0.84rem] font-semibold text-[#0f0e0b]">{tailorName}</p>
                   </div>
                 </div>
 

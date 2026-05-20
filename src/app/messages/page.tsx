@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 type Message = {
   id: string;
@@ -80,6 +81,21 @@ export default function MessagesPage() {
   const [input, setInput] = useState("");
   const [convos, setConvos] = useState(conversations);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [dashboardHref, setDashboardHref] = useState("/customer/dashboard");
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
+      if (!user) return;
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single<{ role: string }>();
+      if (profile?.role === "tailor") setDashboardHref("/tailor/dashboard");
+      else if (profile?.role === "admin") setDashboardHref("/admin/dashboard");
+    });
+  }, []);
 
   const active = convos.find((c) => c.id === activeId)!;
 
@@ -114,7 +130,7 @@ export default function MessagesPage() {
             <p className="text-[0.62rem] font-bold tracking-[0.12em] uppercase text-[#8b6914]">Inbox</p>
             <p className="text-[0.9rem] font-semibold text-[#0f0e0b]">Messages</p>
           </div>
-          <Link href="/customer/dashboard" className="text-[0.75rem] text-[#6b6757] hover:text-[#1c1b17] transition">
+          <Link href={dashboardHref} className="text-[0.75rem] text-[#6b6757] hover:text-[#1c1b17] transition">
             ← Dashboard
           </Link>
         </div>
