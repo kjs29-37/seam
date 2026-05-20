@@ -467,6 +467,24 @@ values (
   'authenticated'
 ) on conflict (id) do nothing;
 
+-- Demo admin account  email: admin@seam.com  password: admin123
+insert into auth.users (id, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data, aud, role)
+values (
+  '00000000-0000-0000-0000-000000000099',
+  'admin@seam.com',
+  crypt('admin123', gen_salt('bf')),
+  now(), now(), now(),
+  '{"provider":"email","providers":["email"]}',
+  '{"full_name":"SEAM Admin","role":"admin"}',
+  'authenticated',
+  'authenticated'
+) on conflict (id) do nothing;
+
+-- Manually insert admin profile in case the trigger already fired with wrong role
+insert into public.profiles (id, role, full_name)
+values ('00000000-0000-0000-0000-000000000099', 'admin', 'SEAM Admin')
+on conflict (id) do update set role = 'admin', full_name = 'SEAM Admin';
+
 insert into public.tailors (id, user_id, studio_name, location, country, region, bio, verified, featured, price_min, price_max, currency, delivery_weeks, response_time, rating, review_count) values
   ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'Lagos Bespoke Studio', 'Lagos, Nigeria', 'Nigeria', 'West Africa', 'Three generations of tailoring excellence from Lagos Island. We specialise in bespoke suits and formal African wear, blending traditional craftsmanship with contemporary silhouettes.', true, true, 180, 1200, 'GBP', 6, 'within 24 hours', 4.9, 48),
   ('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'Nairobi Tailors Co.', 'Nairobi, Kenya', 'Kenya', 'East Africa', 'East Africa''s premier bespoke studio. Known for immaculate construction and stunning bridal work.', true, true, 220, 1800, 'GBP', 8, 'within 12 hours', 4.8, 34),

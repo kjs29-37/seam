@@ -236,3 +236,75 @@ export async function approveAndRelease(orderId: string) {
   if (error) return { error: error.message };
   return { error: null };
 }
+
+// ── Admin: Tailor Applications ───────────────────────────────
+
+// Placeholder user_id for approved tailors who haven't created an account yet
+const SEED_USER_ID = "00000000-0000-0000-0000-000000000000";
+
+export async function approveApplication(applicationId: string): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+
+  // Fetch the application
+  const { data: app, error: fetchError } = await supabase
+    .from("tailor_applications")
+    .select("*")
+    .eq("id", applicationId)
+    .single();
+
+  if (fetchError || !app) return { error: fetchError?.message ?? "Application not found" };
+
+  // Create the tailor profile
+  const { data: tailor, error: tailorError } = await supabase
+    .from("tailors")
+    .insert({
+      user_id: SEED_USER_ID,
+      studio_name: app.studio_name,
+      location: app.location,
+      region: app.region ?? null,
+      bio: app.bio ?? "",
+      price_min: app.price_min ?? 0,
+      price_max: app.price_max ?? 0,
+      years_experience: app.years_experience ?? null,
+      website: app.website ?? null,
+      instagram: app.instagram ?? null,
+      verified: true,
+    })
+    .select("id")
+    .single();
+
+  if (tailorError || !tailor) return { error: tailorError?.message ?? "Failed to create tailor profile" };
+
+  // Insert specialisms
+  if (Array.isArray(app.specialisms) && app.specialisms.length > 0) {
+    await supabase.from("tailor_specialisms").insert(
+      app.specialisms.map((s: string) => ({ tailor_id: tailor.id, specialism: s }))
+    );
+  }
+
+  // Insert garment categories
+  if (Array.isArray(app.garment_categories) && app.garment_categories.length > 0) {
+    await supabase.from("tailor_garment_categories").insert(
+      app.garment_categories.map((c: string) => ({ tailor_id: tailor.id, category: c }))
+    );
+  }
+
+  // Mark application approved
+  const { error: updateError } = await supabase
+    .from("tailor_applications")
+    .update({ status: "approved" })
+    .eq("id", applicationId);
+
+  if (updateError) return { error: updateError.message };
+  return { error: null };
+}
+
+export async function rejectApplication(applicationId: string): Promise<{ error: string | null }> {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("tailor_applications")
+    .update({ status: "rejected" })
+    .eq("id", applicationId);
+  if (error) return { error: error.message };
+  return { error: null };
+}

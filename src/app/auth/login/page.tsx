@@ -50,12 +50,37 @@ function LoginForm() {
     window.location.href = dest;
   }
 
+  const demoAccounts = [
+    { label: "Admin", email: "admin@seam.com", password: "admin123", icon: "🔑" },
+    { label: "Customer", email: "customer@seam.com", password: "customer123", icon: "👤" },
+    { label: "Tailor", email: "tailor@seam.com", password: "tailor123", icon: "🧵" },
+  ];
+
   return (
     <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center px-6 py-16 bg-[#fdfcf9]">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <p className="text-[0.65rem] font-bold tracking-[0.16em] uppercase text-[#8b6914] mb-2">Welcome Back</p>
           <h1 className="font-display text-[2rem] font-bold tracking-[-0.02em] text-[#0f0e0b]">Sign In</h1>
+        </div>
+
+        {/* Demo accounts */}
+        <div className="bg-[#faf4e1] border border-[#c49a2a]/40 rounded-[6px] p-4 mb-5">
+          <p className="text-[0.62rem] font-bold tracking-[0.1em] uppercase text-[#8b6914] mb-3">Demo Accounts — click to fill</p>
+          <div className="flex gap-2">
+            {demoAccounts.map((acc) => (
+              <button
+                key={acc.label}
+                type="button"
+                onClick={() => { setEmail(acc.email); setPassword(acc.password); setError(""); }}
+                className="flex-1 flex flex-col items-center gap-1 bg-white border border-[#c49a2a]/30 rounded-[6px] px-2 py-2.5 hover:bg-[#fdf8ec] transition text-center"
+              >
+                <span className="text-base">{acc.icon}</span>
+                <span className="text-[0.68rem] font-bold text-[#8b6914]">{acc.label}</span>
+                <span className="text-[0.6rem] text-[#9c9886] font-mono">{acc.email}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="bg-white border border-[#e6e3da] rounded-[6px] p-8">
