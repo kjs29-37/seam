@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTailors } from "@/lib/supabase/queries";
+import { tailors } from "@/lib/mock-tailors";
 
 const garmentFilters = ["All", "Men", "Women", "Unisex"];
 const regionFilters = ["All Regions", "West Africa", "East Africa", "North Africa"];
@@ -13,8 +13,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export default async function TailorsPage() {
-  const tailors = await getTailors();
+export default function TailorsPage() {
   const featured = tailors.filter((t) => t.featured);
 
   return (
@@ -121,7 +120,7 @@ export default async function TailorsPage() {
                               Featured
                             </p>
                             <h3 className="font-display text-[1.05rem] font-bold text-[#0f0e0b] leading-tight">
-                              {tailor.studio_name}
+                              {tailor.studioName}
                             </h3>
                           </div>
                           {tailor.verified && (
@@ -134,7 +133,7 @@ export default async function TailorsPage() {
                         <div className="flex items-center gap-2 mb-3">
                           <StarRating rating={tailor.rating} />
                           <span className="text-[0.75rem] text-[#6b6757]">
-                            {tailor.rating} ({tailor.review_count} reviews)
+                            {tailor.rating} ({tailor.reviewCount} reviews)
                           </span>
                         </div>
                         <div className="flex flex-wrap gap-1 mb-4">
@@ -146,7 +145,7 @@ export default async function TailorsPage() {
                         </div>
                         <div className="flex items-center justify-between">
                           <span className="text-[0.78rem] text-[#6b6757]">
-                            From <strong className="text-[#0f0e0b]">{tailor.currency}{tailor.price_min}</strong>
+                            From <strong className="text-[#0f0e0b]">{tailor.currency}{tailor.priceMin}</strong>
                           </span>
                           <span className="text-[0.72rem] font-semibold tracking-[0.04em] uppercase text-[#8b6914]">
                             View Profile →
@@ -182,11 +181,11 @@ export default async function TailorsPage() {
                         {tailor.location}
                       </p>
                       <h3 className="font-display text-[0.95rem] font-bold text-[#0f0e0b] mb-1 leading-tight">
-                        {tailor.studio_name}
+                        {tailor.studioName}
                       </h3>
                       <div className="flex items-center gap-1.5 mb-2">
                         <StarRating rating={tailor.rating} />
-                        <span className="text-[0.72rem] text-[#9c9886]">({tailor.review_count})</span>
+                        <span className="text-[0.72rem] text-[#9c9886]">({tailor.reviewCount})</span>
                       </div>
                       <div className="flex flex-wrap gap-1 mb-3">
                         {tailor.specialisms.slice(0, 2).map((s) => (
@@ -196,7 +195,7 @@ export default async function TailorsPage() {
                         ))}
                       </div>
                       <p className="text-[0.75rem] text-[#6b6757]">
-                        From <strong className="text-[#0f0e0b]">{tailor.currency}{tailor.price_min}</strong>
+                        From <strong className="text-[#0f0e0b]">{tailor.currency}{tailor.priceMin}</strong>
                       </p>
                     </div>
                   </Link>

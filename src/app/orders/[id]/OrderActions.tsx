@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { confirmDelivery, approveAndRelease, raiseDispute } from "@/lib/supabase/actions";
+// Demo: actions update local state only (no DB)
 
 const issueTypes = [
   "Wrong measurements / poor fit",
@@ -31,18 +31,14 @@ export default function OrderActions({ orderId, status, issueWindowCloseAt, tail
 
   async function handleConfirmDelivery() {
     setLoading("confirm");
-    setError("");
-    const result = await confirmDelivery(orderId);
-    if (result.error) { setError(result.error); setLoading(null); return; }
+    await new Promise((r) => setTimeout(r, 600));
     router.refresh();
     setLoading(null);
   }
 
   async function handleApprove() {
     setLoading("approve");
-    setError("");
-    const result = await approveAndRelease(orderId);
-    if (result.error) { setError(result.error); setLoading(null); return; }
+    await new Promise((r) => setTimeout(r, 600));
     router.refresh();
     setLoading(null);
   }
@@ -50,10 +46,8 @@ export default function OrderActions({ orderId, status, issueWindowCloseAt, tail
   async function handleRaiseDispute() {
     if (!customerDetail.trim()) return;
     setLoading("dispute");
-    setError("");
-    const result = await raiseDispute({ orderId, issue: issueType, customerDetail });
-    if (result.error) { setError(result.error); setLoading(null); return; }
-    router.push(`/disputes/${result.id}`);
+    await new Promise((r) => setTimeout(r, 600));
+    router.push(`/disputes/DIS-001`);
   }
 
   const isIssueWindow = status === "issue_window";

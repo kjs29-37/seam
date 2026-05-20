@@ -2,7 +2,7 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import StatCard from "@/components/dashboard/StatCard";
 import StatusBadge from "@/components/dashboard/StatusBadge";
 import Link from "next/link";
-import { getSession } from "@/lib/supabase/queries";
+import { getSession } from "@/lib/demo-auth";
 
 const navItems = [
   { label: "Overview", href: "/tailor/dashboard", icon: "🏠" },
@@ -67,7 +67,7 @@ const activeOrders = [
 
 export default async function TailorDashboard() {
   const session = await getSession();
-  const name = (session?.user?.user_metadata?.full_name as string | undefined) ?? "Your Studio";
+  const name = session?.name ?? "Your Studio";
 
   return (
     <DashboardLayout role="tailor" navItems={navItems}>

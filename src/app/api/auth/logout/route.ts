@@ -9,7 +9,3 @@ export async function GET() {
   res.cookies.delete("seam_email");
   return res;
 }
-
-export async function POST() {
-  return GET();
-}

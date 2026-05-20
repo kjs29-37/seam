@@ -1,5 +1,5 @@
-import { getTailor } from "@/lib/supabase/queries";
 import { redirect } from "next/navigation";
+import { tailors } from "@/lib/mock-tailors";
 import EnquiryFormClient from "./EnquiryFormClient";
 
 export default async function NewEnquiryPage({
@@ -10,8 +10,8 @@ export default async function NewEnquiryPage({
   const { tailor: tailorId } = await searchParams;
   if (!tailorId) redirect("/tailors");
 
-  const tailor = await getTailor(tailorId);
+  const tailor = tailors.find((t) => t.id === tailorId);
   if (!tailor) redirect("/tailors");
 
-  return <EnquiryFormClient tailor={tailor} />;
+  return <EnquiryFormClient tailorId={tailor.id} tailorName={tailor.studioName} responseTime={tailor.responseTime} />;
 }
